@@ -1,0 +1,131 @@
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
+public class Tank {
+
+	private double posx;
+	private double posy;
+	private String tankType;
+	private double dx;
+	private double dy;
+	private int speed;
+	private Image image_base;
+	private Image image_cannon;
+	private double shootAngle;
+	private double movementAngle;
+
+	public double getPosx() {
+		return posx;
+	}
+
+	public void setPosx(double posx) {
+		this.posx = posx;
+	}
+
+	public double getPosy() {
+		return posy;
+	}
+
+	public void setPosy(double posy) {
+		this.posy = posy;
+	}
+
+	public String getTankType() {
+		return tankType;
+	}
+
+	public double getDx() {
+		return dx;
+	}
+
+	public void setDx(double dx) {
+		this.dx = dx;
+	}
+
+	public double getDy() {
+		return dy;
+	}
+
+	public void setDy(double dy) {
+		this.dy = dy;
+	}
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	public int getSpeed() {
+		return speed;
+	}
+
+	public void incrspeed() {
+		this.speed = speed + 1;
+	}
+
+	public void decspeed() {
+		if (speed > 0)
+			this.speed = speed - 1;
+	}
+
+	public Image getImageBase() {
+		return image_base;
+	}
+
+	public Image getImageCannon() {
+		return image_cannon;
+	}
+
+	private void loadImage(String fileBase, String fileCannon) {
+		ImageIcon imageIconBase = new ImageIcon(fileBase); // load the image to a imageIcon
+		Image scimageBase = imageIconBase.getImage(); // transform it
+		this.image_base = scimageBase.getScaledInstance((int)TankGame.getImgSizeTank(), (int) TankGame.getImgSizeTank(),
+				java.awt.Image.SCALE_SMOOTH);
+
+		ImageIcon imageIconCannon = new ImageIcon(fileCannon); // load the image to a imageIcon
+		Image scimageCannon = imageIconCannon.getImage(); // transform it
+		this.image_cannon = scimageCannon.getScaledInstance((int)TankGame.getImgSizeTank(), (int) TankGame.getImgSizeTank(),
+				java.awt.Image.SCALE_SMOOTH);
+	}
+
+	public double getshootAngle() {
+		return shootAngle;
+	}
+
+	public void setShootAngle(double shootAngle) {
+		this.shootAngle = shootAngle;
+	}
+
+	public double getmovementAngle() {
+		return movementAngle;
+	}
+
+	public void setMovementAngle(double movementAngle) {
+		this.movementAngle = movementAngle;
+	}
+
+	// Constructor of the class Tank:
+	public Tank(int initialx, int initialy, double initialAngle, String tankType, String fileBase,
+			String fileCannon) {
+		this.posx = initialx;
+		this.posy = initialy;
+		this.shootAngle = initialAngle;
+		this.movementAngle = initialAngle;
+		this.tankType = tankType;
+		loadImage(fileBase, fileCannon);
+	}
+
+	public boolean collides(double newPosx, double newPosy) {
+
+		for (Wall wall : Board.walls) {
+			if (!(
+				((newPosx + (60.0f / 512.0f) * TankGame.getImgSizeTank()) > (wall.getPosx() + TankGame.getImgSizeWall()))
+					|| ((newPosx + TankGame.getImgSizeWall() - (60.0f / 512.0f) * TankGame.getImgSizeTank()) < wall.getPosx())
+					|| ((newPosy + (60.0f / 512.0f) * TankGame.getImgSizeTank()) > (wall.getPosy() + TankGame.getImgSizeWall()))
+					|| ((newPosy + TankGame.getImgSizeTank() - (60.0f / 512.0f) * TankGame.getImgSizeTank()) < wall.getPosy())
+					)) {
+				return true;
+			}
+		}
+		return false;
+	}
+}
