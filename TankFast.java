@@ -70,7 +70,6 @@ public class TankFast extends Tank {
             }
         }
 
-        System.out.println(seesMainTank);
         if (this.getSeesMainTank()) {
             this.setShootAngle(angle2Main);
             this.setMovementAngle(angle2Main);

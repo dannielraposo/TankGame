@@ -31,6 +31,10 @@ public class TankGame extends JFrame {
         return imgSizeWall;
     }
 
+    public static Dimension getScreenSize() {
+        return screenSize;
+    }
+
     public TankGame() {
         initUI();
     }

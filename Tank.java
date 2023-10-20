@@ -51,7 +51,7 @@ public class Tank {
 	}
 
 	public void setSpeed(int speed) {
-		this.speed = speed;
+		this.speed = speed * (int) TankGame.getScreenSize().getWidth() /1920;
 	}
 
 	public int getSpeed() {

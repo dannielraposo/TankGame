@@ -11,7 +11,7 @@ public class TankMain extends Tank {
     public TankMain(int initialx, int initialy, double initialAngle) {
         super(initialx, initialy, initialAngle, "Main Tank", "Resources/base_green.png",
                 "Resources/cannon_green.png");
-        this.setSpeed(3);
+        this.setSpeed(5);
     }
 
     public void update(Point mousePoint) {
