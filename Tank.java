@@ -8,7 +8,7 @@ public class Tank {
 	private String tankType;
 	private double dx;
 	private double dy;
-	private int speed;
+	private double speed;
 	private Image image_base;
 	private Image image_cannon;
 	private double shootAngle;
@@ -50,11 +50,11 @@ public class Tank {
 		this.dy = dy;
 	}
 
-	public void setSpeed(int speed) {
-		this.speed = speed * (int) TankGame.getScreenSize().getWidth() /1920;
+	public void setSpeed(double speed) {
+		this.speed = speed * TankGame.getScreenSize().getWidth() /1920;
 	}
 
-	public int getSpeed() {
+	public double getSpeed() {
 		return speed;
 	}
 
