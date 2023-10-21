@@ -11,6 +11,7 @@ public class Missile {
     private double angle;
     private boolean visible;
     private boolean bounced;
+    private String missileType;
 
     public double getPosx() {
         return posx;
@@ -62,7 +63,11 @@ public class Missile {
 
     protected Image image;
 
-    private void loadImage(String imageName) {
+    private void loadImage() {
+        String imageName = "Resources/missile_black.png";
+        if (missileType == "enemy") {
+            imageName = "Resources/missile_yellow.png";
+        }
         ImageIcon imageMissile = new ImageIcon(imageName); // load the image to a imageIcon
         Image scimageMissile = imageMissile.getImage(); // transform it
         this.image = scimageMissile.getScaledInstance((int) TankGame.getImgSizeTank(), (int) TankGame.getImgSizeTank(),
@@ -73,10 +78,11 @@ public class Missile {
         return image;
     }
 
-    public Missile(double posx, double posy, double dx, double dy, double angle) {
+    public Missile(double posx, double posy, double dx, double dy, double angle, String missileType) {
 
         // double dxu = dx / Math.sqrt(dx * dx + dy * dy);
-        // double dyu = dy / Math.sqrt(dx * dx + dy * dy);  YA SON UNITARIOS, VIENEN DEL COS Y SEN DEL ANGULO, NO TANGENTE
+        // double dyu = dy / Math.sqrt(dx * dx + dy * dy); YA SON UNITARIOS, VIENEN DEL
+        // COS Y SEN DEL ANGULO, NO TANGENTE
 
         this.posx = posx + dx * TankGame.getImgSizeTank() / 2;
         this.posy = posy + dy * TankGame.getImgSizeTank() / 2;
@@ -85,7 +91,8 @@ public class Missile {
         this.angle = angle;
         this.visible = true;
         this.bounced = false;
-        loadImage("Resources/missile_black.png");
+        this.missileType = missileType;
+        loadImage();
     }
 
     public void move() {

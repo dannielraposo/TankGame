@@ -20,7 +20,7 @@ public class Board extends JPanel implements ActionListener {
 		if (GameLevel == 1) {
 			MainTank = new TankMain(2 * (int) TankGame.getImgSizeWall(), 2 * (int) TankGame.getImgSizeWall(), 0);
 
-			EnemyTanks.add(new TankBasic(3 * (int) TankGame.getImgSizeWall(),
+			EnemyTanks.add(new TankTriple(3 * (int) TankGame.getImgSizeWall(),
 					(int) TankGame.getGameHeight() - 3 * (int) TankGame.getImgSizeWall(), 270));
 			EnemyTanks.add(new TankHard((int) TankGame.getGameWidth() - 3 * (int) TankGame.getImgSizeWall(),
 					3 * (int) TankGame.getImgSizeWall(), 180));
@@ -180,6 +180,9 @@ public class Board extends JPanel implements ActionListener {
 					break;
 				case "TankHard":
 					((TankHard) tank).update(MainTank);
+					break;
+				case "TankTriple":
+					((TankTriple) tank).update(MainTank);
 					break;
 			}
 		}

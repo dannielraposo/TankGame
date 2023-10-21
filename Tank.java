@@ -63,8 +63,16 @@ public class Tank {
 	public void decrlives() {
 		this.lives -= 1;
 		if (getTankType() == "TankHard" && getLives() == 1) {
-			this.loadImage("Resources/base_pink.png", "Resources/cannon_pink.png");
+			this.setVisible(false);
+			Board.EnemyTanks
+					.add(new TankMoves((int) this.getPosx(), (int) this.getPosy(), (int) this.getmovementAngle()));
 		}
+
+		else if (getTankType() == "TankTriple" && getLives() == 2) {
+			this.setVisible(false);
+			Board.EnemyTanks.add(new TankHard((int) this.getPosx(), (int) this.getPosy(), (int) this.getmovementAngle()));
+		}
+
 	}
 
 	public double getDx() {

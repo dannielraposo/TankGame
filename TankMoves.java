@@ -28,7 +28,7 @@ public class TankMoves extends Tank {
     public void fire(double shootAngle) {
         double dx = Math.cos(Math.toRadians(360 - shootAngle));
         double dy = -Math.sin(Math.toRadians(360 - shootAngle));
-        Missile missile = new Missile(this.getPosx(), this.getPosy(), dx, dy, shootAngle);
+        Missile missile = new Missile(this.getPosx(), this.getPosy(), dx, dy, shootAngle, "enemy");
         Board.missiles.add(missile);
     }
 
@@ -71,8 +71,8 @@ public class TankMoves extends Tank {
                 break;
             // posxCheck += dx * (TankGame.getImgSizeWall() - 20);
             // posyCheck += dy * (TankGame.getImgSizeWall() - 20);
-            posxCheck += dx ;
-            posyCheck += dy ;
+            posxCheck += dx;
+            posyCheck += dy;
 
             if (posxCheck < 0 || posxCheck > TankGame.getGameWidth() || posyCheck < 0
                     || posyCheck > TankGame.getGameHeight()) {

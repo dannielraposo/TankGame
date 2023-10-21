@@ -38,7 +38,7 @@ public class TankMain extends Tank {
     public void fire() {
         double dx = Math.cos(Math.toRadians(360 - getshootAngle()));
         double dy = -Math.sin(Math.toRadians(360 - getshootAngle()));
-        Missile missile = new Missile(this.getPosx(), this.getPosy(), dx, dy, this.getshootAngle());
+        Missile missile = new Missile(this.getPosx(), this.getPosy(), dx, dy, this.getshootAngle(), "main");
         Board.missiles.add(missile);
     }
 
