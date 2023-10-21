@@ -9,7 +9,7 @@ public class TankMain extends Tank {
     public boolean Dpressed = false;
 
     public TankMain(int initialx, int initialy, double initialAngle) {
-        super(initialx, initialy, initialAngle, "TankMain", "Resources/base_green.png",
+        super(initialx, initialy, initialAngle, "TankMain", 3, "Resources/base_green.png",
                 "Resources/cannon_green.png");
         this.setSpeed(5);
     }

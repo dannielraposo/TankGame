@@ -9,7 +9,7 @@ public class Board extends JPanel implements ActionListener {
 	static private Timer timer;
 	static private final int DELAY = 10;
 	private String backgroundImage;
-	static private TankMain MainTank;
+	static public TankMain MainTank;
 	static public Tank[] EnemyTanks;
 	static public List<Missile> missiles = new ArrayList<>();
 	static public List<Wall> walls = new ArrayList<>();

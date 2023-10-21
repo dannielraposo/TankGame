@@ -65,7 +65,7 @@ public class Missile {
     private void loadImage(String imageName) {
         ImageIcon imageMissile = new ImageIcon(imageName); // load the image to a imageIcon
         Image scimageMissile = imageMissile.getImage(); // transform it
-        this.image = scimageMissile.getScaledInstance((int)TankGame.getImgSizeTank(), (int)TankGame.getImgSizeTank(),
+        this.image = scimageMissile.getScaledInstance((int) TankGame.getImgSizeTank(), (int) TankGame.getImgSizeTank(),
                 java.awt.Image.SCALE_SMOOTH);
     }
 
@@ -74,8 +74,12 @@ public class Missile {
     }
 
     public Missile(double posx, double posy, double dx, double dy, double angle) {
-        this.posx = posx;
-        this.posy = posy;
+
+        // double dxu = dx / Math.sqrt(dx * dx + dy * dy);
+        // double dyu = dy / Math.sqrt(dx * dx + dy * dy);  YA SON UNITARIOS, VIENEN DEL COS Y SEN DEL ANGULO, NO TANGENTE
+
+        this.posx = posx + dx * TankGame.getImgSizeTank() / 2;
+        this.posy = posy + dy * TankGame.getImgSizeTank() / 2;
         this.dx = dx;
         this.dy = dy;
         this.angle = angle;
@@ -92,12 +96,40 @@ public class Missile {
         double visualPosx = newPosx + TankGame.getImgSizeTank() / 2;
         double visualPosy = newPosy + TankGame.getImgSizeTank() / 2;
 
+        // Check collision with MAIN tank
+        if ((visualPosx > Board.MainTank.getPosx() + TankGame.getImgSizeTank() * 60 / 512)
+                && (visualPosx < (Board.MainTank.getPosx() + TankGame.getImgSizeTank()
+                        - TankGame.getImgSizeTank() * 60 / 512))
+                && (visualPosy > Board.MainTank.getPosy() + TankGame.getImgSizeTank() * 60 / 512)
+                && (visualPosy < (Board.MainTank.getPosy() + TankGame.getImgSizeTank()
+                        - TankGame.getImgSizeTank() * 60 / 512))) {
+            this.setVisible(false);
+            Board.MainTank.decrlives();
+            return;
+
+        }
+
+        // Check collision with enemy tanks
+        for (Tank tank : Board.EnemyTanks) {
+            if ((visualPosx > tank.getPosx() + TankGame.getImgSizeTank() * 60 / 512)
+                    && (visualPosx < (tank.getPosx() + TankGame.getImgSizeTank()
+                            - TankGame.getImgSizeTank() * 60 / 512))
+                    && (visualPosy > tank.getPosy() + TankGame.getImgSizeTank() * 60 / 512)
+                    && (visualPosy < (tank.getPosy() + TankGame.getImgSizeTank()
+                            - TankGame.getImgSizeTank() * 60 / 512))) {
+                this.setVisible(false);
+                tank.decrlives();
+                return;
+
+            }
+        }
+
+        // Check collision with walls
         for (Wall wall : Board.walls) {
             if (visualPosx > wall.getPosx() && visualPosx < (wall.getPosx() + TankGame.getImgSizeWall())
                     && visualPosy > wall.getPosy() && visualPosy < (wall.getPosy() + TankGame.getImgSizeWall())) {
 
                 if (wall.getType() == "standard") {
-
                     if (this.bounced) {
                         this.setVisible(false);
                     } else {
@@ -128,14 +160,12 @@ public class Missile {
                             this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
                         }
                     }
-                }
-                if (wall.getType() == "weak") {
+                } else if (wall.getType() == "weak") {
                     wall.setVisible(false);
                     this.setVisible(false);
                     this.setPosx(newPosx);
                     this.setPosy(newPosy);
-                }
-                if (wall.getType() == "reward") {
+                } else if (wall.getType() == "reward") {
                     wall.setVisible(false);
                     this.setVisible(false);
 

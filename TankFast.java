@@ -13,7 +13,7 @@ public class TankFast extends Tank {
     }
 
     public TankFast(int initialx, int initialy, int initialAngle) {
-        super(initialx, initialy, initialAngle, "TankFast", "Resources/base_pink.png",
+        super(initialx, initialy, initialAngle, "TankFast", 1, "Resources/base_pink.png",
                 "Resources/cannon_pink.png");
         this.setSpeed(2);
         this.setSeesMainTank(false);

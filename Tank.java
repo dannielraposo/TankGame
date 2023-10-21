@@ -6,6 +6,7 @@ public class Tank {
 	private double posx;
 	private double posy;
 	private String tankType;
+	private int lives;
 	private double dx;
 	private double dy;
 	private double speed;
@@ -32,6 +33,18 @@ public class Tank {
 
 	public String getTankType() {
 		return tankType;
+	}
+
+	public int getLives() {
+		return lives;
+	}
+
+	public void incrlives() {
+		this.lives += 1;
+	}
+
+	public void decrlives() {
+		this.lives -= 1;
 	}
 
 	public double getDx() {
@@ -106,13 +119,14 @@ public class Tank {
 	}
 
 	// Constructor of the class Tank:
-	public Tank(int initialx, int initialy, double initialAngle, String tankType, String fileBase,
+	public Tank(int initialx, int initialy, double initialAngle, String tankType, int lives, String fileBase,
 			String fileCannon) {
 		this.posx = initialx;
 		this.posy = initialy;
 		this.shootAngle = initialAngle;
 		this.movementAngle = initialAngle;
 		this.tankType = tankType;
+		this.lives = lives;
 		loadImage(fileBase, fileCannon);
 	}
 
