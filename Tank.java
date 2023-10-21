@@ -115,13 +115,12 @@ public class Tank {
 	}
 
 	public boolean collides(double newPosx, double newPosy) {
-
 		for (Wall wall : Board.walls) {
 			if (!(
-				((newPosx + (60.0f / 512.0f) * TankGame.getImgSizeTank()) > (wall.getPosx() + TankGame.getImgSizeWall()))
-					|| ((newPosx + TankGame.getImgSizeWall() - (60.0f / 512.0f) * TankGame.getImgSizeTank()) < wall.getPosx())
-					|| ((newPosy + (60.0f / 512.0f) * TankGame.getImgSizeTank()) > (wall.getPosy() + TankGame.getImgSizeWall()))
-					|| ((newPosy + TankGame.getImgSizeTank() - (60.0f / 512.0f) * TankGame.getImgSizeTank()) < wall.getPosy())
+				((newPosx + TankGame.getImgSizeTank() * 60 / 512) > (wall.getPosx() + TankGame.getImgSizeWall()))
+					|| ((newPosx + TankGame.getImgSizeTank() - TankGame.getImgSizeTank() * 60 / 512) < wall.getPosx())
+					|| ((newPosy + TankGame.getImgSizeTank() * 60 / 512) > (wall.getPosy() + TankGame.getImgSizeWall()))
+					|| ((newPosy + TankGame.getImgSizeTank() - TankGame.getImgSizeTank() * 60 / 512) < wall.getPosy())
 					)) {
 				return true;
 			}
