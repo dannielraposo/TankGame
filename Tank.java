@@ -126,13 +126,18 @@ public class Tank {
 				return true;
 			}
 		}
-		for (Wall wall : Board.walls) {
-			if (!(((newPosx + TankGame.getImgSizeTank() * 60 / 512) > (wall.getPosx() + TankGame.getImgSizeWall()))
-					|| ((newPosx + TankGame.getImgSizeTank() - TankGame.getImgSizeTank() * 60 / 512) < wall.getPosx())
-					|| ((newPosy + TankGame.getImgSizeTank() * 60 / 512) > (wall.getPosy() + TankGame.getImgSizeWall()))
-					|| ((newPosy + TankGame.getImgSizeTank() - TankGame.getImgSizeTank() * 60 / 512) < wall
-							.getPosy()))) {
-				return true;
+		for (Tank tank : Board.EnemyTanks) {
+			if (tank != this) {
+				if (!(((newPosx + TankGame.getImgSizeTank() * 60 / 512) > (tank.getPosx() + TankGame.getImgSizeTank()
+						- TankGame.getImgSizeTank() * 60 / 512))
+						|| ((newPosx + TankGame.getImgSizeTank() - TankGame.getImgSizeTank() * 60 / 512) < tank
+								.getPosx() + TankGame.getImgSizeTank() * 60 / 512)
+						|| ((newPosy + TankGame.getImgSizeTank() * 60 / 512) > (tank.getPosy()
+								+ TankGame.getImgSizeTank() - TankGame.getImgSizeTank() * 60 / 512))
+						|| ((newPosy + TankGame.getImgSizeTank() - TankGame.getImgSizeTank() * 60 / 512) < tank
+								.getPosy() + TankGame.getImgSizeTank() * 60 / 512))) {
+					return true;
+				}
 			}
 		}
 

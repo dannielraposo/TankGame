@@ -6,17 +6,13 @@ import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener {
 
-	private Timer timer;
-	private final int DELAY = 10;
+	static private Timer timer;
+	static private final int DELAY = 10;
 	private String backgroundImage;
-	private TankMain MainTank;
-	private Tank[] EnemyTanks;
-	static List<Missile> missiles = new ArrayList<>();
-	static List<Wall> walls = new ArrayList<>();
-
-	public static List<Wall> getWalls() {
-		return walls;
-	}
+	static private TankMain MainTank;
+	static public Tank[] EnemyTanks;
+	static public List<Missile> missiles = new ArrayList<>();
+	static public List<Wall> walls = new ArrayList<>();
 
 	public void generateTanksandTerrain(int GameLevel) {
 		backgroundImage = "Resources/background" + GameLevel + ".png";
