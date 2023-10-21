@@ -10,7 +10,7 @@ public class Board extends JPanel implements ActionListener {
 	private final int DELAY = 10;
 	private String backgroundImage;
 	private TankMain MainTank;
-	private TankFast[] EnemyTanksBasic;
+	private Tank[] EnemyTanks;
 	static List<Missile> missiles = new ArrayList<>();
 	static List<Wall> walls = new ArrayList<>();
 
@@ -24,8 +24,8 @@ public class Board extends JPanel implements ActionListener {
 		if (GameLevel == 1) {
 			MainTank = new TankMain(600, 200, 0);
 
-			EnemyTanksBasic = new TankFast[1];
-			EnemyTanksBasic[0] = new TankFast(500, 500, 270);
+			EnemyTanks = new TankFast[1];
+			EnemyTanks[0] = new TankFast(500, 500, 270);
 			generateTerrain(GameLevel);
 		}
 
@@ -129,23 +129,23 @@ public class Board extends JPanel implements ActionListener {
 		gphCannon.dispose();
 
 		// DRAW ENEMY TANKS:
-		for (int i = 0; i < EnemyTanksBasic.length; i++) {
-			locationX = EnemyTanksBasic[i].getPosx() + TankGame.getImgSizeTank() / 2;
-			locationY = EnemyTanksBasic[i].getPosy() + TankGame.getImgSizeTank() / 2;
+		for (int i = 0; i < EnemyTanks.length; i++) {
+			locationX = EnemyTanks[i].getPosx() + TankGame.getImgSizeTank() / 2;
+			locationY = EnemyTanks[i].getPosy() + TankGame.getImgSizeTank() / 2;
 
 			// Draw enemy tank base:
 			Graphics2D gphEnemyBase = (Graphics2D) g2D.create();
-			gphEnemyBase.rotate(Math.toRadians(EnemyTanksBasic[i].getmovementAngle()), locationX, locationY);
-			gphEnemyBase.drawImage(EnemyTanksBasic[i].getImageBase(), (int) EnemyTanksBasic[i].getPosx(),
-					(int) EnemyTanksBasic[i].getPosy(),
+			gphEnemyBase.rotate(Math.toRadians(EnemyTanks[i].getmovementAngle()), locationX, locationY);
+			gphEnemyBase.drawImage(EnemyTanks[i].getImageBase(), (int) EnemyTanks[i].getPosx(),
+					(int) EnemyTanks[i].getPosy(),
 					this);
 			gphEnemyBase.dispose();
 
 			// Draw enemy tank cannon:
 			Graphics2D gphEnemyCannon = (Graphics2D) g2D.create();
-			gphEnemyCannon.rotate(Math.toRadians(EnemyTanksBasic[i].getshootAngle()), locationX, locationY);
-			gphEnemyCannon.drawImage(EnemyTanksBasic[i].getImageCannon(), (int) EnemyTanksBasic[i].getPosx(),
-					(int) EnemyTanksBasic[i].getPosy(),
+			gphEnemyCannon.rotate(Math.toRadians(EnemyTanks[i].getshootAngle()), locationX, locationY);
+			gphEnemyCannon.drawImage(EnemyTanks[i].getImageCannon(), (int) EnemyTanks[i].getPosx(),
+					(int) EnemyTanks[i].getPosy(),
 					this);
 			gphEnemyCannon.dispose();
 		}
@@ -162,8 +162,13 @@ public class Board extends JPanel implements ActionListener {
 			missile.move();
 		}
 
-		for (int i = 0; i < EnemyTanksBasic.length; i++) {
-			EnemyTanksBasic[i].update(MainTank);
+		for (int i = 0; i < EnemyTanks.length; i++) {
+			switch (EnemyTanks[i].getTankType()) {
+				case "TankBasic":
+					((TankBasic) EnemyTanks[i]).update(MainTank);
+				case "TankFast":
+					((TankFast) EnemyTanks[i]).update(MainTank);
+			}
 		}
 
 		repaint();
@@ -231,7 +236,7 @@ public class Board extends JPanel implements ActionListener {
 
 		}
 
-		switch (gameLevel) {		
+		switch (gameLevel) {
 
 			case 1:
 				walls.add(new Wall(middle_point_horiz, middle_point_vert, "standard"));

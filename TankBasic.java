@@ -13,7 +13,7 @@ public class TankBasic extends Tank {
     }
 
     public TankBasic(int initialx, int initialy, int initialAngle) {
-        super(initialx, initialy, initialAngle, "Main Tank", "Resources/base_blue.png",
+        super(initialx, initialy, initialAngle, "TankBasic", "Resources/base_blue.png",
                 "Resources/cannon_blue.png");
         this.setSpeed(1);
         this.setSeesMainTank(false);
