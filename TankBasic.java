@@ -26,6 +26,11 @@ public class TankBasic extends Tank {
     }
 
     public void update(Tank mainTank) {
+        if (this.getLives() == 0) {
+            this.setVisible(false);
+            return;
+        }
+
         int angle2Main = (int) Math.toDegrees(
                 Math.atan2(
                         (mainTank.getPosy() + TankGame.getImgSizeTank() / 2)
@@ -77,7 +82,8 @@ public class TankBasic extends Tank {
 
         } else {
             double newangle = this.getshootAngle() + 0.2;
-            if (Math.abs(newangle - angle2Main) > 45) cannonrotationsign *= -1;
+            if (Math.abs(newangle - angle2Main) > 45)
+                cannonrotationsign *= -1;
             this.setShootAngle(this.getshootAngle() + cannonrotationsign * 0.2);
         }
     }

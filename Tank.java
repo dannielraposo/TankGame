@@ -3,6 +3,7 @@ import javax.swing.ImageIcon;
 
 public class Tank {
 
+	private boolean visible;
 	private double posx;
 	private double posy;
 	private String tankType;
@@ -29,6 +30,14 @@ public class Tank {
 
 	public void setPosy(double posy) {
 		this.posy = posy;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	public boolean getVisible() {
+		return visible;
 	}
 
 	public String getTankType() {
@@ -127,6 +136,7 @@ public class Tank {
 		this.movementAngle = initialAngle;
 		this.tankType = tankType;
 		this.lives = lives;
+		this.visible = true;
 		loadImage(fileBase, fileCannon);
 	}
 
