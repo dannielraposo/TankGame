@@ -24,8 +24,8 @@ public class TankMain extends Tank {
         }
         this.setShootAngle(angle);
 
-        double newPosx = this.getPosx() + this.getDx();
-        double newPosy = this.getPosy() + this.getDy();
+        double newPosx = this.getPosx() + this.getDx() * this.getSpeed();
+        double newPosy = this.getPosy() + this.getDy() * this.getSpeed();
 
         if (this.collides(newPosx, newPosy))
             return;
@@ -45,7 +45,7 @@ public class TankMain extends Tank {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_W) {
-            this.setDy(-this.getSpeed());
+            this.setDy(-1);
             Wpressed = true;
             if (!Apressed && !Dpressed) {
                 this.setMovementAngle(270);
@@ -62,7 +62,7 @@ public class TankMain extends Tank {
         }
 
         if (key == KeyEvent.VK_S) {
-            this.setDy(+this.getSpeed());
+            this.setDy(+1);
             Spressed = true;
 
             if (!Apressed && !Dpressed) {
@@ -80,7 +80,7 @@ public class TankMain extends Tank {
         }
 
         if (key == KeyEvent.VK_D) {
-            this.setDx(+this.getSpeed());
+            this.setDx(+1);
             Dpressed = true;
             if (!Wpressed && !Spressed) {
                 this.setMovementAngle(0);
@@ -97,7 +97,7 @@ public class TankMain extends Tank {
 
         }
         if (key == KeyEvent.VK_A) {
-            this.setDx(-this.getSpeed());
+            this.setDx(-1);
             Apressed = true;
             if (!Wpressed && !Spressed) {
                 this.setMovementAngle(180);

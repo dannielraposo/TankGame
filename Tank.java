@@ -51,7 +51,7 @@ public class Tank {
 	}
 
 	public void setSpeed(double speed) {
-		this.speed = speed * TankGame.getScreenSize().getWidth() /1920;
+		this.speed = speed * TankGame.getScreenSize().getWidth() / 1920;
 	}
 
 	public double getSpeed() {
@@ -78,12 +78,14 @@ public class Tank {
 	private void loadImage(String fileBase, String fileCannon) {
 		ImageIcon imageIconBase = new ImageIcon(fileBase); // load the image to a imageIcon
 		Image scimageBase = imageIconBase.getImage(); // transform it
-		this.image_base = scimageBase.getScaledInstance((int)TankGame.getImgSizeTank(), (int) TankGame.getImgSizeTank(),
+		this.image_base = scimageBase.getScaledInstance((int) TankGame.getImgSizeTank(),
+				(int) TankGame.getImgSizeTank(),
 				java.awt.Image.SCALE_SMOOTH);
 
 		ImageIcon imageIconCannon = new ImageIcon(fileCannon); // load the image to a imageIcon
 		Image scimageCannon = imageIconCannon.getImage(); // transform it
-		this.image_cannon = scimageCannon.getScaledInstance((int)TankGame.getImgSizeTank(), (int) TankGame.getImgSizeTank(),
+		this.image_cannon = scimageCannon.getScaledInstance((int) TankGame.getImgSizeTank(),
+				(int) TankGame.getImgSizeTank(),
 				java.awt.Image.SCALE_SMOOTH);
 	}
 
@@ -116,15 +118,24 @@ public class Tank {
 
 	public boolean collides(double newPosx, double newPosy) {
 		for (Wall wall : Board.walls) {
-			if (!(
-				((newPosx + TankGame.getImgSizeTank() * 60 / 512) > (wall.getPosx() + TankGame.getImgSizeWall()))
+			if (!(((newPosx + TankGame.getImgSizeTank() * 60 / 512) > (wall.getPosx() + TankGame.getImgSizeWall()))
 					|| ((newPosx + TankGame.getImgSizeTank() - TankGame.getImgSizeTank() * 60 / 512) < wall.getPosx())
 					|| ((newPosy + TankGame.getImgSizeTank() * 60 / 512) > (wall.getPosy() + TankGame.getImgSizeWall()))
-					|| ((newPosy + TankGame.getImgSizeTank() - TankGame.getImgSizeTank() * 60 / 512) < wall.getPosy())
-					)) {
+					|| ((newPosy + TankGame.getImgSizeTank() - TankGame.getImgSizeTank() * 60 / 512) < wall
+							.getPosy()))) {
 				return true;
 			}
 		}
+		for (Wall wall : Board.walls) {
+			if (!(((newPosx + TankGame.getImgSizeTank() * 60 / 512) > (wall.getPosx() + TankGame.getImgSizeWall()))
+					|| ((newPosx + TankGame.getImgSizeTank() - TankGame.getImgSizeTank() * 60 / 512) < wall.getPosx())
+					|| ((newPosy + TankGame.getImgSizeTank() * 60 / 512) > (wall.getPosy() + TankGame.getImgSizeWall()))
+					|| ((newPosy + TankGame.getImgSizeTank() - TankGame.getImgSizeTank() * 60 / 512) < wall
+							.getPosy()))) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 }

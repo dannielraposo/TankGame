@@ -73,9 +73,13 @@ public class TankFast extends Tank {
         if (this.getSeesMainTank()) {
             this.setShootAngle(angle2Main);
             this.setMovementAngle(angle2Main);
-            if(Math.sqrt(Math.pow(this.getPosx() - mainTank.getPosx(), 2) + Math.pow(this.getPosy()-mainTank.getPosy(), 2)) > (2* TankGame.getImgSizeTank()*1.5)){
-            this.setPosx(this.getPosx() + this.getDx() * this.getSpeed());
-            this.setPosy(this.getPosy() + this.getDy() * this.getSpeed());
+            //Check if distance to MainTank is prudencial in order to mode:
+            double newPosx = this.getPosx() + this.getDx() * this.getSpeed();
+            double newPosy = this.getPosy() + this.getDy() * this.getSpeed();
+            if(Math.sqrt(Math.pow(this.getPosx() - mainTank.getPosx(), 2) + Math.pow(this.getPosy()-mainTank.getPosy(), 2)) > (2* TankGame.getImgSizeTank()*1.5)
+            && !this.collides(newPosx, newPosy)){
+            this.setPosx(newPosx);
+            this.setPosy(newPosy);
             }
 
 
