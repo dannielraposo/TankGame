@@ -78,6 +78,10 @@ public class Missile {
         return image;
     }
 
+    public String getMissileType() {
+        return missileType;
+    }
+
     public Missile(double posx, double posy, double dx, double dy, double angle, String missileType) {
 
         // double dxu = dx / Math.sqrt(dx * dx + dy * dy);
@@ -111,7 +115,9 @@ public class Missile {
                 && (visualPosy < (Board.MainTank.getPosy() + TankGame.getImgSizeTank()
                         - TankGame.getImgSizeTank() * 60 / 512))) {
             this.setVisible(false);
-            Board.MainTank.decrlives();
+            if (this.getMissileType() == "enemy") {
+                Board.MainTank.decrlives();
+            }
             return;
 
         }
@@ -125,7 +131,9 @@ public class Missile {
                     && (visualPosy < (tank.getPosy() + TankGame.getImgSizeTank()
                             - TankGame.getImgSizeTank() * 60 / 512))) {
                 this.setVisible(false);
-                tank.decrlives();
+                if (this.getMissileType() == "main") {
+                    tank.decrlives();
+                }
                 return;
 
             }
