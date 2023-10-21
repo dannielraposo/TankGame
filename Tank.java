@@ -40,8 +40,16 @@ public class Tank {
 		return visible;
 	}
 
+	public void setTankType(String tankType) {
+		this.tankType = tankType;
+	}
+
 	public String getTankType() {
 		return tankType;
+	}
+
+	public void setLives(int lives) {
+		this.lives = lives;
 	}
 
 	public int getLives() {
@@ -54,6 +62,9 @@ public class Tank {
 
 	public void decrlives() {
 		this.lives -= 1;
+		if (getTankType() == "TankHard" && getLives() == 1) {
+			this.loadImage("Resources/base_pink.png", "Resources/cannon_pink.png");
+		}
 	}
 
 	public double getDx() {
@@ -97,7 +108,7 @@ public class Tank {
 		return image_cannon;
 	}
 
-	private void loadImage(String fileBase, String fileCannon) {
+	public void loadImage(String fileBase, String fileCannon) {
 		ImageIcon imageIconBase = new ImageIcon(fileBase); // load the image to a imageIcon
 		Image scimageBase = imageIconBase.getImage(); // transform it
 		this.image_base = scimageBase.getScaledInstance((int) TankGame.getImgSizeTank(),
@@ -128,8 +139,7 @@ public class Tank {
 	}
 
 	// Constructor of the class Tank:
-	public Tank(int initialx, int initialy, double initialAngle, String tankType, int lives, String fileBase,
-			String fileCannon) {
+	public Tank(int initialx, int initialy, double initialAngle, String tankType, int lives) {
 		this.posx = initialx;
 		this.posy = initialy;
 		this.shootAngle = initialAngle;
@@ -137,7 +147,6 @@ public class Tank {
 		this.tankType = tankType;
 		this.lives = lives;
 		this.visible = true;
-		loadImage(fileBase, fileCannon);
 	}
 
 	public boolean collides(double newPosx, double newPosy) {

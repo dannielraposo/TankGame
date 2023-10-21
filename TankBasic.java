@@ -13,8 +13,8 @@ public class TankBasic extends Tank {
     }
 
     public TankBasic(int initialx, int initialy, int initialAngle) {
-        super(initialx, initialy, initialAngle, "TankBasic", 1, "Resources/base_blue.png",
-                "Resources/cannon_blue.png");
+        super(initialx, initialy, initialAngle, "TankBasic", 1);
+        loadImage("Resources/base_blue.png", "Resources/cannon_blue.png");
         this.setSeesMainTank(false);
     }
 
@@ -51,8 +51,8 @@ public class TankBasic extends Tank {
         boolean lastSeen = getSeesMainTank();
 
         setSeesMainTank(true);
-        while (!(posxCheck > mainTank.getPosx() && posxCheck < (mainTank.getPosx() + TankGame.getImgSizeTank())
-                && posyCheck > mainTank.getPosy() && posyCheck < (mainTank.getPosy() + TankGame.getImgSizeTank()))) {
+        while (!(posxCheck > mainTank.getPosx() && posxCheck < (mainTank.getPosx() + TankGame.getImgSizeWall())
+                && posyCheck > mainTank.getPosy() && posyCheck < (mainTank.getPosy() + TankGame.getImgSizeWall()))) {
             for (Wall wall : Board.walls) {
                 if (posxCheck > wall.getPosx() && posxCheck < (wall.getPosx() + TankGame.getImgSizeWall())
                         && posyCheck > wall.getPosy() && posyCheck < (wall.getPosy() + TankGame.getImgSizeWall())) {
@@ -60,19 +60,22 @@ public class TankBasic extends Tank {
                     break;
                 }
             }
-            posxCheck += dx * (TankGame.getImgSizeWall() - 5);
-            posyCheck += dy * (TankGame.getImgSizeWall() - 5);
+            if (!getSeesMainTank()) break;
+            // posxCheck += dx * (TankGame.getImgSizeWall() - 20);
+            // posyCheck += dy * (TankGame.getImgSizeWall() - 20);
+            
+            posxCheck += dx ;
+            posyCheck += dy ;
 
             if (posxCheck < 0 || posxCheck > TankGame.getGameWidth() || posyCheck < 0
                     || posyCheck > TankGame.getGameHeight()) {
                 // setSeesMainTank(false);
-
                 break;
             }
         }
+
         if (this.getSeesMainTank()) {
             this.setShootAngle(angle2Main);
-
             if (!lastSeen || (lastSeen && clockCyclesAfterLastShot == 100)) {
                 this.fire(this.getshootAngle());
                 clockCyclesAfterLastShot = 0;

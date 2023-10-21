@@ -22,9 +22,9 @@ public class Board extends JPanel implements ActionListener {
 
 			EnemyTanks.add(new TankBasic(3 * (int) TankGame.getImgSizeWall(),
 					(int) TankGame.getGameHeight() - 3 * (int) TankGame.getImgSizeWall(), 270));
-			EnemyTanks.add(new TankBasic((int) TankGame.getGameWidth() - 3 * (int) TankGame.getImgSizeWall(),
+			EnemyTanks.add(new TankHard((int) TankGame.getGameWidth() - 3 * (int) TankGame.getImgSizeWall(),
 					3 * (int) TankGame.getImgSizeWall(), 180));
-			EnemyTanks.add(new TankFast((int) TankGame.getGameWidth() - 3 * (int) TankGame.getImgSizeWall(),
+			EnemyTanks.add(new TankMoves((int) TankGame.getGameWidth() - 3 * (int) TankGame.getImgSizeWall(),
 					(int) TankGame.getGameHeight() - 3 * (int) TankGame.getImgSizeWall(), 180));
 			generateTerrain(GameLevel);
 		}
@@ -175,8 +175,11 @@ public class Board extends JPanel implements ActionListener {
 				case "TankBasic":
 					((TankBasic) tank).update(MainTank);
 					break;
-				case "TankFast":
-					((TankFast) tank).update(MainTank);
+				case "TankMoves":
+					((TankMoves) tank).update(MainTank);
+					break;
+				case "TankHard":
+					((TankHard) tank).update(MainTank);
 					break;
 			}
 		}
