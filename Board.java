@@ -13,6 +13,7 @@ public class Board extends JPanel implements ActionListener {
 	static public List<Tank> EnemyTanks = new ArrayList<>();
 	static public List<Missile> missiles = new ArrayList<>();
 	static public List<Wall> walls = new ArrayList<>();
+	static public List<Reward> rewards = new ArrayList<>();
 
 	public void generateTanksandTerrain(int GameLevel) {
 		backgroundImage = "Resources/background" + GameLevel + ".png";
@@ -72,13 +73,14 @@ public class Board extends JPanel implements ActionListener {
 
 	private void doDrawingBackground(Graphics g2D) {
 
+		//Draw background image:
 		Graphics2D gphbackimage = (Graphics2D) g2D.create();
 		ImageIcon imageBackground = new ImageIcon(backgroundImage);
 		Image sciimageBackground = imageBackground.getImage();
-
 		gphbackimage.drawImage(sciimageBackground, 0, 0, this);
 		gphbackimage.dispose();
 
+		//Draw walls:
 		List<Wall> walls2delete = new ArrayList<>();
 		for (Wall wall : walls) {
 			if (!wall.getVisible()) {
@@ -91,6 +93,20 @@ public class Board extends JPanel implements ActionListener {
 			}
 		}
 		walls.removeAll(walls2delete);
+
+		//Draw rewards:
+		List<Reward> rewards2delete = new ArrayList<>();
+		for (Reward reward : rewards) {
+			if (!reward.getVisible()) {
+				rewards2delete.add(reward);
+			} else {
+				Graphics2D gphReward = (Graphics2D) g2D.create();
+
+				gphReward.drawImage(reward.getImage(), reward.getPosx(), reward.getPosy(), this);
+				gphReward.dispose();
+			}
+		}
+		rewards.removeAll(rewards2delete);
 	}
 
 	private void doDrawingTanks(Graphics g2D) {
@@ -259,15 +275,15 @@ public class Board extends JPanel implements ActionListener {
 
 			case 1:
 				walls.add(new Wall((middle_point_horiz) - 4 * (int) TankGame.getImgSizeWall(),
-						(int) TankGame.getImgSizeWall(), "weak"));
+						(int) TankGame.getImgSizeWall(), "reward_1up"));
 				walls.add(new Wall((middle_point_horiz) - 4 * (int) TankGame.getImgSizeWall(),
-						2 * (int) TankGame.getImgSizeWall(), "weak"));
+						2 * (int) TankGame.getImgSizeWall(), "reward_3shot"));
 				walls.add(new Wall((middle_point_horiz) - 4 * (int) TankGame.getImgSizeWall(),
-						3 * (int) TankGame.getImgSizeWall(), "weak"));
+						3 * (int) TankGame.getImgSizeWall(), "reward_energy"));
 				walls.add(new Wall((middle_point_horiz) - 4 * (int) TankGame.getImgSizeWall(),
-						4 * (int) TankGame.getImgSizeWall(), "weak"));
+						4 * (int) TankGame.getImgSizeWall(), "reward_ghost"));
 				walls.add(new Wall((middle_point_horiz) - 6 * (int) TankGame.getImgSizeWall(),
-						4 * (int) TankGame.getImgSizeWall(), "standard"));
+						4 * (int) TankGame.getImgSizeWall(), "reward_shield"));
 				walls.add(new Wall((middle_point_horiz) - 8 * (int) TankGame.getImgSizeWall(),
 						4 * (int) TankGame.getImgSizeWall(), "standard"));
 
