@@ -97,7 +97,7 @@ public class Board extends JPanel implements ActionListener {
 		setSize(TankGame.getGameWidth(), TankGame.getGameHeight());
 		setPreferredSize(new Dimension(TankGame.getGameWidth(), TankGame.getGameHeight()));
 
-		this.generateTanksandTerrain(4);
+		this.generateTanksandTerrain(3);
 		
 		timer = new Timer(DELAY, this);
 		timer.start();
@@ -319,15 +319,15 @@ public class Board extends JPanel implements ActionListener {
 
 			case 1:
 				walls.add(new Wall((middle_point_horiz) - 4 * (int) TankGame.getImgSizeWall(),
-						(int) TankGame.getImgSizeWall(), "reward_1up"));
+						(int) TankGame.getImgSizeWall(), "weak"));
 				walls.add(new Wall((middle_point_horiz) - 4 * (int) TankGame.getImgSizeWall(),
-						2 * (int) TankGame.getImgSizeWall(), "reward_3shot"));
+						2 * (int) TankGame.getImgSizeWall(), "standard"));
 				walls.add(new Wall((middle_point_horiz) - 4 * (int) TankGame.getImgSizeWall(),
-						3 * (int) TankGame.getImgSizeWall(), "reward_energy"));
+						3 * (int) TankGame.getImgSizeWall(), "weak"));
 				walls.add(new Wall((middle_point_horiz) - 4 * (int) TankGame.getImgSizeWall(),
-						4 * (int) TankGame.getImgSizeWall(), "reward_ghost"));
+						4 * (int) TankGame.getImgSizeWall(), "standard"));
 				walls.add(new Wall((middle_point_horiz) - 6 * (int) TankGame.getImgSizeWall(),
-						4 * (int) TankGame.getImgSizeWall(), "reward_shield"));
+						4 * (int) TankGame.getImgSizeWall(), "weak"));
 				walls.add(new Wall((middle_point_horiz) - 8 * (int) TankGame.getImgSizeWall(),
 						4 * (int) TankGame.getImgSizeWall(), "standard"));
 
@@ -359,6 +359,8 @@ public class Board extends JPanel implements ActionListener {
 						middle_point_vert - (int) TankGame.getImgSizeWall() / 2, "standard"));
 				walls.add(new Wall((int) TankGame.getGameWidth() - 8 * (int) TankGame.getImgSizeWall(),
 						middle_point_vert - (int) TankGame.getImgSizeWall() / 2, "standard"));
+					
+			break;
 
 			case 2:
 
@@ -392,7 +394,7 @@ public class Board extends JPanel implements ActionListener {
 			walls.add(new Wall(middle_point_horiz,
 						middle_point_vert, "reward"));
 
-
+			break;
 			case 3:
 			
 			walls.add(new Wall(middle_point_horiz + (int) TankGame.getImgSizeWall()/2,
@@ -437,7 +439,7 @@ public class Board extends JPanel implements ActionListener {
 			walls.add(new Wall(middle_point_horiz - (int) TankGame.getImgSizeWall()/2 - 4*(int) TankGame.getImgSizeWall(),
 						middle_point_vert + 2*(int) TankGame.getImgSizeWall(), "standard"));
 			
-
+			break;
 			case 4:
 			walls.add(new Wall((middle_point_horiz) - 4 * (int) TankGame.getImgSizeWall(),
 						(int) TankGame.getImgSizeWall(), "weak"));
@@ -480,7 +482,7 @@ public class Board extends JPanel implements ActionListener {
 						middle_point_vert - (int) TankGame.getImgSizeWall() / 2, "standard"));
 				walls.add(new Wall((int) TankGame.getGameWidth() - 8 * (int) TankGame.getImgSizeWall(),
 						middle_point_vert - (int) TankGame.getImgSizeWall() / 2, "standard"));
-
+				break;
 			default:
 		}
 	}
