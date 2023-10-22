@@ -118,9 +118,13 @@ public class TankMain extends Tank {
                         timerghost.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                setGhost(false);
+                                Board.MainTank.setGhost(false);
+                                if (Board.MainTank.collides(Board.MainTank.getPosx(), Board.MainTank.getPosy())) {
+                                    Board.MainTank.decrlives();
+                                    System.out.println("stucked after ghost mode");
+                                }
                             }
-                        }, 10 * 1000);
+                        }, 5 * 1000);
                         break;
                     case "reward_shield":
                         setShield(true);
@@ -128,7 +132,7 @@ public class TankMain extends Tank {
                         timershield.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                setShield(false);
+                                Board.MainTank.setShield(false);
                             }
                         }, 15 * 1000);
                         break;
