@@ -8,6 +8,7 @@ public class TankMoves extends Tank {
     private boolean seesMainTank;
     private int clockCyclesAfterLastShot = 0;
     private int cannonrotationsign = 1;
+    private int signofrotativemov = 1;
 
     public void setSeesMainTank(boolean seesMainTank) {
         this.seesMainTank = seesMainTank;
@@ -20,15 +21,15 @@ public class TankMoves extends Tank {
     public TankMoves(int initialx, int initialy, int initialAngle) {
         super(initialx, initialy, initialAngle, "TankMoves", 1);
         loadImage("Resources/base_pink.png", "Resources/cannon_pink.png");
-        this.setSpeed(2);
-        this.seesMainTank = false;
+        this.setSpeed(1);
+        this.setSeesMainTank(false);
         this.movingRandomly = false;
     }
 
     public void fire(double shootAngle) {
         double dx = Math.cos(Math.toRadians(360 - shootAngle));
         double dy = -Math.sin(Math.toRadians(360 - shootAngle));
-        Missile missile = new Missile(this.getPosx(), this.getPosy(), dx, dy, shootAngle, "enemy");
+        Missile missile = new Missile(this.getPosx(), this.getPosy(), dx, dy, shootAngle, "enemy", false);
         Board.missiles.add(missile);
     }
 
@@ -57,28 +58,35 @@ public class TankMoves extends Tank {
 
         boolean lastSeen = getSeesMainTank();
 
-        setSeesMainTank(true);
-        while (!(posxCheck > mainTank.getPosx() && posxCheck < (mainTank.getPosx() + TankGame.getImgSizeWall())
-                && posyCheck > mainTank.getPosy() && posyCheck < (mainTank.getPosy() + TankGame.getImgSizeWall()))) {
-            for (Wall wall : Board.walls) {
-                if (posxCheck > wall.getPosx() && posxCheck < (wall.getPosx() + TankGame.getImgSizeWall())
-                        && posyCheck > wall.getPosy() && posyCheck < (wall.getPosy() + TankGame.getImgSizeWall())) {
-                    setSeesMainTank(false);
+        if (!Board.MainTank.getGhost()) {
+
+            setSeesMainTank(true);
+            while (!(posxCheck > mainTank.getPosx() && posxCheck < (mainTank.getPosx() + TankGame.getImgSizeWall())
+                    && posyCheck > mainTank.getPosy()
+                    && posyCheck < (mainTank.getPosy() + TankGame.getImgSizeWall()))) {
+                for (Wall wall : Board.walls) {
+                    if (posxCheck > wall.getPosx() && posxCheck < (wall.getPosx() + TankGame.getImgSizeWall())
+                            && posyCheck > wall.getPosy() && posyCheck < (wall.getPosy() + TankGame.getImgSizeWall())) {
+                        setSeesMainTank(false);
+                        break;
+                    }
+                }
+                if (!getSeesMainTank())
+                    break;
+                // posxCheck += dx * (TankGame.getImgSizeWall() - 20);
+                // posyCheck += dy * (TankGame.getImgSizeWall() - 20);
+                posxCheck += dx;
+                posyCheck += dy;
+
+                if (posxCheck < 0 || posxCheck > TankGame.getGameWidth() || posyCheck < 0
+                        || posyCheck > TankGame.getGameHeight()) {
+                    // setSeesMainTank(false);
                     break;
                 }
             }
-            if (!getSeesMainTank())
-                break;
-            // posxCheck += dx * (TankGame.getImgSizeWall() - 20);
-            // posyCheck += dy * (TankGame.getImgSizeWall() - 20);
-            posxCheck += dx;
-            posyCheck += dy;
+        } else {
+            setSeesMainTank(false);
 
-            if (posxCheck < 0 || posxCheck > TankGame.getGameWidth() || posyCheck < 0
-                    || posyCheck > TankGame.getGameHeight()) {
-                // setSeesMainTank(false);
-                break;
-            }
         }
 
         if (this.getSeesMainTank()) {
@@ -94,6 +102,19 @@ public class TankMoves extends Tank {
                     && !this.collides(newPosx, newPosy)) {
                 this.setPosx(newPosx);
                 this.setPosy(newPosy);
+            }
+
+            else {
+                dx = Math.cos(Math.toRadians(360 - (angle2Main + signofrotativemov * 90)));
+                dy = -Math.sin(Math.toRadians(360 - (angle2Main + signofrotativemov * 90)));
+                newPosx = this.getPosx() + dx * this.getSpeed();
+                newPosy = this.getPosy() + dy * this.getSpeed();
+                if (!this.collides(newPosx, newPosy)) {
+                    this.setMovementAngle(angle2Main + signofrotativemov * 90);
+                    this.setPosx(newPosx);
+                    this.setPosy(newPosy);
+                }
+                else {signofrotativemov = signofrotativemov * -1;}
             }
 
             if (!lastSeen || (lastSeen && clockCyclesAfterLastShot == 100)) {

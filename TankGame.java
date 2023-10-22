@@ -15,6 +15,7 @@ public class TankGame extends JFrame {
     /* The size of walls is adjusted in order to fit well 
     in the screen (regardless of the resolution) */
     private static double imgSizeTank = (height * 0.08); // Size (lenght and width of icons in game: tanks)
+    private static double imgSizeReward = (height * 0.07); // Size (lenght and width of icons in game: tanks)
     private static double imgSizeWall = (height * 0.092); // Size (lenght and width of icons in game: walls)
 
     public static int getGameWidth() {
@@ -29,6 +30,9 @@ public class TankGame extends JFrame {
         return imgSizeTank;
     }
 
+    public static double getImgSizeReward() {
+        return imgSizeReward;
+    }
     public static double getImgSizeWall() {
         return imgSizeWall;
     }
@@ -50,6 +54,8 @@ public class TankGame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        
         // Add image component to the frame
+        
+
         this.add(new Board());
         this.pack();
         this.setLocationRelativeTo(null);

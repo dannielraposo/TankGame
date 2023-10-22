@@ -3,7 +3,7 @@ import javax.swing.ImageIcon;
 
 public class Missile {
 
-    private final int MISSILE_SPEED = 6;
+    private final int MISSILE_SPEED = 2;
     private double posx;
     private double posy;
     private double dx;
@@ -12,6 +12,7 @@ public class Missile {
     private boolean visible;
     private boolean bounced;
     private String missileType;
+    private boolean doublespeed;
 
     public double getPosx() {
         return posx;
@@ -64,9 +65,9 @@ public class Missile {
     protected Image image;
 
     private void loadImage() {
-        String imageName = "Resources/missile_black.png";
+        String imageName = "Resources/missile_green.png";
         if (missileType == "enemy") {
-            imageName = "Resources/missile_yellow.png";
+            imageName = "Resources/missile_black.png";
         }
         ImageIcon imageMissile = new ImageIcon(imageName); // load the image to a imageIcon
         Image scimageMissile = imageMissile.getImage(); // transform it
@@ -82,7 +83,7 @@ public class Missile {
         return missileType;
     }
 
-    public Missile(double posx, double posy, double dx, double dy, double angle, String missileType) {
+    public Missile(double posx, double posy, double dx, double dy, double angle, String missileType, boolean doublespeed) {
 
         // double dxu = dx / Math.sqrt(dx * dx + dy * dy);
         // double dyu = dy / Math.sqrt(dx * dx + dy * dy); YA SON UNITARIOS, VIENEN DEL
@@ -96,6 +97,7 @@ public class Missile {
         this.visible = true;
         this.bounced = false;
         this.missileType = missileType;
+        this.doublespeed = doublespeed;
         loadImage();
     }
 
@@ -103,6 +105,12 @@ public class Missile {
 
         double newPosx = this.getPosx() + MISSILE_SPEED * this.getDx();
         double newPosy = this.getPosy() + MISSILE_SPEED * this.getDy();
+
+        if (this.doublespeed){
+            newPosx = this.getPosx() + 2 * MISSILE_SPEED * this.getDx();
+            newPosy = this.getPosy() + 2 * MISSILE_SPEED * this.getDy();
+        }
+
 
         double visualPosx = newPosx + TankGame.getImgSizeTank() / 2;
         double visualPosy = newPosy + TankGame.getImgSizeTank() / 2;
@@ -176,16 +184,90 @@ public class Missile {
                         }
                     }
                 } else if (wall.getType() == "weak") {
-                    wall.setVisible(false);
-                    this.setVisible(false);
-                    this.setPosx(newPosx);
-                    this.setPosy(newPosy);
-                } else if (wall.getType() == "reward") {
-                    wall.setVisible(false);
-                    this.setVisible(false);
+                    if (this.getMissileType() == "enemy") {
+                        if (this.bounced) {
+                            this.setVisible(false);
+                        } else {
+                            this.bounced = true;
 
-                    this.setPosx(newPosx);
-                    this.setPosy(newPosy);
+                            double distleft = Math.abs(visualPosx - wall.getPosx());
+                            double distright = Math.abs(visualPosx - (wall.getPosx() + TankGame.getImgSizeWall()));
+                            double disttop = Math.abs(visualPosy - wall.getPosy());
+                            double distbottom = Math.abs(visualPosy - (wall.getPosy() + TankGame.getImgSizeWall()));
+
+                            if (distleft < distright && distleft < disttop && distleft < distbottom) {
+                                // System.out.println("colision left wall");
+                                this.setDx(-this.getDx());
+                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+                            } else if (distright < distleft && distright < disttop && distright < distbottom) {
+                                // System.out.println("colision right wall");
+                                this.setDx(-this.getDx());
+                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+
+                            } else if (disttop < distright && disttop < distleft && disttop < distbottom) {
+                                // System.out.println("colision top wall");
+                                this.setDy(-this.getDy());
+                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+
+                            } else if (distbottom < distright && distbottom < disttop && distbottom < distleft) {
+                                // System.out.println("colision bottom wall");
+                                this.setDy(-this.getDy());
+                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+                            }
+                        }
+                    } else {
+                        wall.setVisible(false);
+                        this.setVisible(false);
+                        this.setPosx(newPosx);
+                        this.setPosy(newPosy);
+                    }
+                } else if (wall.getType().startsWith("reward")) {
+                    if (this.getMissileType() == "enemy") {
+                        if (this.bounced) {
+                            this.setVisible(false);
+                        } else {
+                            this.bounced = true;
+
+                            double distleft = Math.abs(visualPosx - wall.getPosx());
+                            double distright = Math.abs(visualPosx - (wall.getPosx() + TankGame.getImgSizeWall()));
+                            double disttop = Math.abs(visualPosy - wall.getPosy());
+                            double distbottom = Math.abs(visualPosy - (wall.getPosy() + TankGame.getImgSizeWall()));
+
+                            if (distleft < distright && distleft < disttop && distleft < distbottom) {
+                                // System.out.println("colision left wall");
+                                this.setDx(-this.getDx());
+                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+                            } else if (distright < distleft && distright < disttop && distright < distbottom) {
+                                // System.out.println("colision right wall");
+                                this.setDx(-this.getDx());
+                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+
+                            } else if (disttop < distright && disttop < distleft && disttop < distbottom) {
+                                // System.out.println("colision top wall");
+                                this.setDy(-this.getDy());
+                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+
+                            } else if (distbottom < distright && distbottom < disttop && distbottom < distleft) {
+                                // System.out.println("colision bottom wall");
+                                this.setDy(-this.getDy());
+                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+                            }
+                        }
+                    } else {
+                        wall.setVisible(false);
+                        this.setVisible(false);
+
+                        Board.rewards.add(
+                                new Reward(
+                                        (int) (wall.getPosx() + TankGame.getImgSizeWall() / 2
+                                                - TankGame.getImgSizeReward() / 2),
+                                        (int) (wall.getPosy() + TankGame.getImgSizeWall() / 2
+                                                - TankGame.getImgSizeReward() / 2),
+                                        wall.getType()));
+
+                        this.setPosx(newPosx);
+                        this.setPosy(newPosy);
+                    }
                 }
             }
 

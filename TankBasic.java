@@ -21,7 +21,7 @@ public class TankBasic extends Tank {
     public void fire(double shootAngle) {
         double dx = Math.cos(Math.toRadians(360 - shootAngle));
         double dy = -Math.sin(Math.toRadians(360 - shootAngle));
-        Missile missile = new Missile(this.getPosx(), this.getPosy(), dx, dy, shootAngle, "enemy");
+        Missile missile = new Missile(this.getPosx(), this.getPosy(), dx, dy, shootAngle, "enemy", false);
         Board.missiles.add(missile);
     }
 
@@ -50,28 +50,35 @@ public class TankBasic extends Tank {
 
         boolean lastSeen = getSeesMainTank();
 
-        setSeesMainTank(true);
-        while (!(posxCheck > mainTank.getPosx() && posxCheck < (mainTank.getPosx() + TankGame.getImgSizeWall())
-                && posyCheck > mainTank.getPosy() && posyCheck < (mainTank.getPosy() + TankGame.getImgSizeWall()))) {
-            for (Wall wall : Board.walls) {
-                if (posxCheck > wall.getPosx() && posxCheck < (wall.getPosx() + TankGame.getImgSizeWall())
-                        && posyCheck > wall.getPosy() && posyCheck < (wall.getPosy() + TankGame.getImgSizeWall())) {
-                    setSeesMainTank(false);
+        if (!Board.MainTank.getGhost()) {
+
+            setSeesMainTank(true);
+            while (!(posxCheck > mainTank.getPosx() && posxCheck < (mainTank.getPosx() + TankGame.getImgSizeWall())
+                    && posyCheck > mainTank.getPosy()
+                    && posyCheck < (mainTank.getPosy() + TankGame.getImgSizeWall()))) {
+                for (Wall wall : Board.walls) {
+                    if (posxCheck > wall.getPosx() && posxCheck < (wall.getPosx() + TankGame.getImgSizeWall())
+                            && posyCheck > wall.getPosy() && posyCheck < (wall.getPosy() + TankGame.getImgSizeWall())) {
+                        setSeesMainTank(false);
+                        break;
+                    }
+                }
+                if (!getSeesMainTank())
+                    break;
+                // posxCheck += dx * (TankGame.getImgSizeWall() - 20);
+                // posyCheck += dy * (TankGame.getImgSizeWall() - 20);
+                posxCheck += dx;
+                posyCheck += dy;
+
+                if (posxCheck < 0 || posxCheck > TankGame.getGameWidth() || posyCheck < 0
+                        || posyCheck > TankGame.getGameHeight()) {
+                    // setSeesMainTank(false);
                     break;
                 }
             }
-            if (!getSeesMainTank()) break;
-            // posxCheck += dx * (TankGame.getImgSizeWall() - 20);
-            // posyCheck += dy * (TankGame.getImgSizeWall() - 20);
+        } else {
+            setSeesMainTank(false);
 
-            posxCheck += dx ;
-            posyCheck += dy ;
-
-            if (posxCheck < 0 || posxCheck > TankGame.getGameWidth() || posyCheck < 0
-                    || posyCheck > TankGame.getGameHeight()) {
-                // setSeesMainTank(false);
-                break;
-            }
         }
 
         if (this.getSeesMainTank()) {

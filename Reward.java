@@ -2,7 +2,7 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-public class Wall {
+public class Reward {
 
     private int posx;
     private int posy;
@@ -10,7 +10,7 @@ public class Wall {
     private boolean visible;
     private Image image;
 
-    public Wall(int posx, int posy, String type) {
+    public Reward(int posx, int posy, String type) {
         this.posx = posx;
         this.posy = posy;
         this.type = type;
@@ -51,12 +51,9 @@ public class Wall {
     }
 
     private void loadImage(String type) {
-        if (type.startsWith("reward")) {
-            type = "reward";
-        }
-        ImageIcon imageIcon = new ImageIcon("Resources/wall_" + type + ".png"); // load the image to a imageIcon
+        ImageIcon imageIcon = new ImageIcon("Resources/" + this.type + ".png"); // load the image to a imageIcon
         Image scimage = imageIcon.getImage(); // transform it
-        this.image = scimage.getScaledInstance((int) TankGame.getImgSizeWall(), (int) TankGame.getImgSizeWall(),
+        this.image = scimage.getScaledInstance((int) TankGame.getImgSizeReward(), (int) TankGame.getImgSizeReward(),
                 java.awt.Image.SCALE_SMOOTH);
     }
 

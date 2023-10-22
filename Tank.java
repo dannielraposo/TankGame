@@ -61,6 +61,16 @@ public class Tank {
 	}
 
 	public void decrlives() {
+		if (getTankType() == "TankMain") {
+			if (((TankMain) this).getShield()) {
+				((TankMain) this).setShield(false);
+				return;
+			} else {
+				this.lives -= 1;
+				return;
+			}
+		}
+
 		this.lives -= 1;
 		if (getTankType() == "TankHard" && getLives() == 1) {
 			this.setVisible(false);
@@ -70,7 +80,8 @@ public class Tank {
 
 		else if (getTankType() == "TankTriple" && getLives() == 2) {
 			this.setVisible(false);
-			Board.EnemyTanks.add(new TankHard((int) this.getPosx(), (int) this.getPosy(), (int) this.getmovementAngle()));
+			Board.EnemyTanks
+					.add(new TankHard((int) this.getPosx(), (int) this.getPosy(), (int) this.getmovementAngle()));
 		}
 
 	}
