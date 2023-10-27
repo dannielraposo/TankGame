@@ -1,4 +1,6 @@
 import java.awt.Image;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 
@@ -16,8 +18,24 @@ public class Reward {
         this.type = type;
         this.visible = true;
         loadImage(type);
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+
+                    @Override
+                    public void run() {
+                        
+                    }
+                }, 5 * 100);
+            }
+        }, 2 * 1000);
     }
 
+  
     public int getPosx() {
         return posx;
     }

@@ -83,7 +83,8 @@ public class Missile {
         return missileType;
     }
 
-    public Missile(double posx, double posy, double dx, double dy, double angle, String missileType, boolean doublespeed) {
+    public Missile(double posx, double posy, double dx, double dy, double angle, String missileType,
+            boolean doublespeed) {
 
         // double dxu = dx / Math.sqrt(dx * dx + dy * dy);
         // double dyu = dy / Math.sqrt(dx * dx + dy * dy); YA SON UNITARIOS, VIENEN DEL
@@ -106,11 +107,10 @@ public class Missile {
         double newPosx = this.getPosx() + MISSILE_SPEED * this.getDx();
         double newPosy = this.getPosy() + MISSILE_SPEED * this.getDy();
 
-        if (this.doublespeed){
+        if (this.doublespeed) {
             newPosx = this.getPosx() + 2 * MISSILE_SPEED * this.getDx();
             newPosy = this.getPosy() + 2 * MISSILE_SPEED * this.getDy();
         }
-
 
         double visualPosx = newPosx + TankGame.getImgSizeTank() / 2;
         double visualPosy = newPosy + TankGame.getImgSizeTank() / 2;

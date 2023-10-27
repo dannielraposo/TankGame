@@ -67,6 +67,7 @@ public class Tank {
 				return;
 			} else {
 				this.lives -= 1;
+				TankGame.board.LostLife();
 				return;
 			}
 		}

@@ -113,8 +113,9 @@ public class TankMoves extends Tank {
                     this.setMovementAngle(angle2Main + signofrotativemov * 90);
                     this.setPosx(newPosx);
                     this.setPosy(newPosy);
+                } else {
+                    signofrotativemov = signofrotativemov * -1;
                 }
-                else {signofrotativemov = signofrotativemov * -1;}
             }
 
             if (!lastSeen || (lastSeen && clockCyclesAfterLastShot == 100)) {
