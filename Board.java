@@ -47,12 +47,10 @@ public class Board extends JPanel {
 
 			EnemyTanks.add(new TankMoves(3 * (int) TankGame.getImgSizeWall(),
 					(int) TankGame.getGameHeight() - 3 * (int) TankGame.getImgSizeWall(), 270));
-			// EnemyTanks.add(new TankMoves((int) TankGame.getGameWidth() - 3 * (int)
-			// TankGame.getImgSizeWall(),
-			// 2 * (int) TankGame.getImgSizeWall(), 180));
-			// EnemyTanks.add(new TankMoves((int) TankGame.getGameWidth() - 2 * (int)
-			// TankGame.getImgSizeWall(),
-			// (int) TankGame.getGameHeight() - 2 * (int) TankGame.getImgSizeWall(), 225));
+			EnemyTanks.add(new TankHard((int) TankGame.getGameWidth() - 3 * (int) TankGame.getImgSizeWall(),
+					2 * (int) TankGame.getImgSizeWall(), 180));
+			EnemyTanks.add(new TankMoves((int) TankGame.getGameWidth() - 2 * (int) TankGame.getImgSizeWall(),
+					(int) TankGame.getGameHeight() - 2 * (int) TankGame.getImgSizeWall(), 225));
 			generateTerrain(GameLevel);
 
 		}
@@ -75,22 +73,41 @@ public class Board extends JPanel {
 			generateTerrain(GameLevel);
 		}
 
-		else if (GameLevel == 4) {
-			MainTank = new TankMain(middle_point_horiz, middle_point_vert, 0);
-
-			EnemyTanks.add(new TankBasic(middle_point_horiz + 7 * (int) TankGame.getImgSizeWall(),
-					middle_point_vert, 0));
-			EnemyTanks.add(new TankBasic(middle_point_horiz - 8 * (int) TankGame.getImgSizeWall(),
-					middle_point_vert, 180));
-			EnemyTanks.add(new TankBasic(middle_point_horiz + 7 * (int) TankGame.getImgSizeWall(),
-					middle_point_vert - (int) TankGame.getImgSizeWall(), 0));
-			EnemyTanks.add(new TankBasic(middle_point_horiz - 8 * (int) TankGame.getImgSizeWall(),
-					middle_point_vert - (int) TankGame.getImgSizeWall(), 180));
-			EnemyTanks.add(new TankBasic(middle_point_horiz + 7 * (int) TankGame.getImgSizeWall(),
-					middle_point_vert + (int) TankGame.getImgSizeWall(), 0));
-			EnemyTanks.add(new TankBasic(middle_point_horiz - 8 * (int) TankGame.getImgSizeWall(),
-					middle_point_vert + (int) TankGame.getImgSizeWall(), 180));
+		if (GameLevel == 4) {
+			MainTank = new TankMain((int) TankGame.getImgSizeWall(),(int) TankGame.getImgSizeWall(), 0);
+			
+			
+			EnemyTanks.add(new TankHard((int) TankGame.getImgSizeWall(),
+					3 * (int) TankGame.getImgSizeWall(), 0));
+			EnemyTanks.add(new TankHard(9*(int) TankGame.getImgSizeWall(),
+					3 * (int) TankGame.getImgSizeWall(), 90));
+			EnemyTanks.add(new TankHard(7*(int) TankGame.getImgSizeWall(),
+						9*(int) TankGame.getImgSizeWall(), 270));
+			EnemyTanks.add(new TankHard(10*(int) TankGame.getImgSizeWall(),
+						(int) TankGame.getImgSizeWall(), 0));
+			EnemyTanks.add(new TankHard(15*(int) TankGame.getImgSizeWall(),
+						6*(int) TankGame.getImgSizeWall(), 180));
+			
+			
 			generateTerrain(GameLevel);
+		}
+		if (GameLevel == 5) {
+			MainTank = new TankMain((int) TankGame.getGameWidth()-3*(int)TankGame.getImgSizeWall(),(int) TankGame.getGameHeight()-3*(int)TankGame.getImgSizeWall(), 225);
+			
+			EnemyTanks.add(new TankTriple(middle_point_horiz,
+					middle_point_vert, 0));
+			EnemyTanks.add(new TankTriple(middle_point_horiz+3*(int)TankGame.getImgSizeWall(),
+					middle_point_vert-3*(int)TankGame.getImgSizeWall(), 0));
+			EnemyTanks.add(new TankTriple(middle_point_horiz-3*(int)TankGame.getImgSizeWall(),
+					middle_point_vert+3*(int)TankGame.getImgSizeWall(), 0));
+			
+			// EnemyTanks.add(new TankTriple(middle_point_horiz-3*(int)TankGame.getImgSizeWall(),
+			// 		middle_point_vert-3*(int)TankGame.getImgSizeWall(), 0));
+			// EnemyTanks.add(new TankTriple(middle_point_horiz-3*(int)TankGame.getImgSizeWall(),
+			// 		middle_point_vert-2*(int)TankGame.getImgSizeWall(), 0));
+			// EnemyTanks.add(new TankTriple(middle_point_horiz-3*(int)TankGame.getImgSizeWall(),
+			// 		middle_point_vert-4*(int)TankGame.getImgSizeWall(), 0));
+		generateTerrain(GameLevel);
 		}
 	}
 
@@ -438,8 +455,8 @@ public class Board extends JPanel {
 				walls.add(new Wall(middle_point_horiz - 6 * (int) TankGame.getImgSizeWall(),
 						middle_point_vert + 2 * (int) TankGame.getImgSizeWall(), "standard"));
 
-				walls.add(new Wall(middle_point_horiz,
-						middle_point_vert, "reward"));
+			walls.add(new Wall(middle_point_horiz,
+						middle_point_vert, "reward_energy"));
 
 				break;
 			case 3:
@@ -504,48 +521,197 @@ public class Board extends JPanel {
 
 				break;
 			case 4:
-				walls.add(new Wall((middle_point_horiz) - 4 * (int) TankGame.getImgSizeWall(),
-						(int) TankGame.getImgSizeWall(), "weak"));
-				walls.add(new Wall((middle_point_horiz) - 4 * (int) TankGame.getImgSizeWall(),
-						2 * (int) TankGame.getImgSizeWall(), "weak"));
-				walls.add(new Wall((middle_point_horiz) - 4 * (int) TankGame.getImgSizeWall(),
-						3 * (int) TankGame.getImgSizeWall(), "weak"));
-				walls.add(new Wall((middle_point_horiz) - 4 * (int) TankGame.getImgSizeWall(),
-						4 * (int) TankGame.getImgSizeWall(), "weak"));
-				walls.add(new Wall((middle_point_horiz) - 6 * (int) TankGame.getImgSizeWall(),
-						4 * (int) TankGame.getImgSizeWall(), "standard"));
-				walls.add(new Wall((middle_point_horiz) - 8 * (int) TankGame.getImgSizeWall(),
-						4 * (int) TankGame.getImgSizeWall(), "standard"));
-
-				walls.add(new Wall(middle_point_horiz - (int) TankGame.getImgSizeWall() / 2,
-						(int) TankGame.getGameHeight() - 2 * (int) TankGame.getImgSizeWall(), "weak"));
-				walls.add(new Wall(middle_point_horiz - (int) TankGame.getImgSizeWall() / 2,
-						(int) TankGame.getGameHeight() - 3 * (int) TankGame.getImgSizeWall(), "standard"));
-				walls.add(new Wall(middle_point_horiz - (int) TankGame.getImgSizeWall() / 2,
-						(int) TankGame.getGameHeight() - 4 * (int) TankGame.getImgSizeWall(), "standard"));
-
-				walls.add(new Wall(middle_point_horiz - (int) TankGame.getImgSizeWall() / 2,
+				walls.add(new Wall((int) TankGame.getImgSizeWall(),
+						2*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(2*(int) TankGame.getImgSizeWall(),
+						2*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(3*(int) TankGame.getImgSizeWall(),
+						2*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(4*(int) TankGame.getImgSizeWall(),
+						2*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall((int) TankGame.getImgSizeWall(),
+						5*(int) TankGame.getImgSizeWall(), "reward_1up"));
+				walls.add(new Wall((int) TankGame.getImgSizeWall(),
+						4*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(2*(int) TankGame.getImgSizeWall(),
+						4*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(4*(int) TankGame.getImgSizeWall(),
+						4*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(5*(int) TankGame.getImgSizeWall(),
+						4*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(6*(int) TankGame.getImgSizeWall(),
+						2*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(6*(int) TankGame.getImgSizeWall(),
+						3*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(6*(int) TankGame.getImgSizeWall(),
+						4*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(6*(int) TankGame.getImgSizeWall(),
+						5*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(6*(int) TankGame.getImgSizeWall(),
+						6*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(8*(int) TankGame.getImgSizeWall(),
+						(int) TankGame.getImgSizeWall(), "reward_shield"));
+				walls.add(new Wall(9*(int) TankGame.getImgSizeWall(),
 						(int) TankGame.getImgSizeWall(), "standard"));
-				walls.add(new Wall(middle_point_horiz - (int) TankGame.getImgSizeWall() / 2,
-						2 * (int) TankGame.getImgSizeWall(), "weak"));
-				walls.add(new Wall(middle_point_horiz - (int) TankGame.getImgSizeWall() / 2,
-						3 * (int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(9*(int) TankGame.getImgSizeWall(),
+						2*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(8*(int) TankGame.getImgSizeWall(),
+						2*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(8*(int) TankGame.getImgSizeWall(),
+						3*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(8*(int) TankGame.getImgSizeWall(),
+						4*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(8*(int) TankGame.getImgSizeWall(),
+						6*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(10*(int) TankGame.getImgSizeWall(),
+						2*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(10*(int) TankGame.getImgSizeWall(),
+						3*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall((int) TankGame.getImgSizeWall(),
+						6*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(2*(int) TankGame.getImgSizeWall(),
+						6*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(3*(int) TankGame.getImgSizeWall(),
+						6*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(4*(int) TankGame.getImgSizeWall(),
+						6*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(6*(int) TankGame.getImgSizeWall(),
+						6*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(2*(int) TankGame.getImgSizeWall(),
+						8*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(2*(int) TankGame.getImgSizeWall(),
+						8*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(3*(int) TankGame.getImgSizeWall(),
+						8*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(4*(int) TankGame.getImgSizeWall(),
+						8*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(5*(int) TankGame.getImgSizeWall(),
+						8*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(6*(int) TankGame.getImgSizeWall(),
+						8*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(6*(int) TankGame.getImgSizeWall(),
+						7*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(8*(int) TankGame.getImgSizeWall(),
+						7*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(9*(int) TankGame.getImgSizeWall(),
+						7*(int) TankGame.getImgSizeWall(), "reward_shield"));
+				walls.add(new Wall(8*(int) TankGame.getImgSizeWall(),
+						8*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(9*(int) TankGame.getImgSizeWall(),
+						8*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(10*(int) TankGame.getImgSizeWall(),
+						8*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(10*(int) TankGame.getImgSizeWall(),
+						7*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(10*(int) TankGame.getImgSizeWall(),
+						6*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(10*(int) TankGame.getImgSizeWall(),
+						5*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall((int) TankGame.getGameWidth()-2*(int) TankGame.getImgSizeWall(),
+						8*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall((int) TankGame.getGameWidth()-3*(int) TankGame.getImgSizeWall(),
+						8*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall((int) TankGame.getGameWidth()-4*(int) TankGame.getImgSizeWall(),
+						8*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall((int) TankGame.getGameWidth()-5*(int) TankGame.getImgSizeWall(),
+						8*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall((int) TankGame.getGameWidth()-6*(int) TankGame.getImgSizeWall(),
+						8*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall((int) TankGame.getGameWidth()-7*(int) TankGame.getImgSizeWall(),
+						8*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall((int) TankGame.getGameWidth()-2*(int) TankGame.getImgSizeWall(),
+						9*(int) TankGame.getImgSizeWall(), "reward_1up"));
+				walls.add(new Wall((int) TankGame.getGameWidth()-7*(int) TankGame.getImgSizeWall(),
+						7*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall((int) TankGame.getGameWidth()-7*(int) TankGame.getImgSizeWall(),
+						6*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall((int) TankGame.getGameWidth()-7*(int) TankGame.getImgSizeWall(),
+						5*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall((int) TankGame.getGameWidth()-7*(int) TankGame.getImgSizeWall(),
+						6*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall((int) TankGame.getGameWidth()-7*(int) TankGame.getImgSizeWall(),
+						5*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(11*(int) TankGame.getImgSizeWall(),
+						3*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(12*(int) TankGame.getImgSizeWall(),
+						3*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(12*(int) TankGame.getImgSizeWall(),
+						2*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(13*(int) TankGame.getImgSizeWall(),
+						2*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(14*(int) TankGame.getImgSizeWall(),
+						2*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(15*(int) TankGame.getImgSizeWall(),
+						2*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(16*(int) TankGame.getImgSizeWall(),
+						2*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(16*(int) TankGame.getImgSizeWall(),
+						3*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(12*(int) TankGame.getImgSizeWall(),
+						3*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(13*(int) TankGame.getImgSizeWall(),
+						3*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(14*(int) TankGame.getImgSizeWall(),
+						3*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(15*(int) TankGame.getImgSizeWall(),
+						3*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(16*(int) TankGame.getImgSizeWall(),
+						4*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(16*(int) TankGame.getImgSizeWall(),
+						5*(int) TankGame.getImgSizeWall(), "reward_shield"));
+				walls.add(new Wall(16*(int) TankGame.getImgSizeWall(),
+						6*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(15*(int) TankGame.getImgSizeWall(),
+						4*(int) TankGame.getImgSizeWall(), "standard"));
+				walls.add(new Wall(15*(int) TankGame.getImgSizeWall(),
+						5*(int) TankGame.getImgSizeWall(), "standard"));
 
-				walls.add(new Wall((int) TankGame.getGameWidth() - 2 * (int) TankGame.getImgSizeWall(),
-						middle_point_vert - (int) TankGame.getImgSizeWall() / 2, "standard"));
-				walls.add(new Wall((int) TankGame.getGameWidth() - 3 * (int) TankGame.getImgSizeWall(),
-						middle_point_vert - (int) TankGame.getImgSizeWall() / 2, "weak"));
-				walls.add(new Wall((int) TankGame.getGameWidth() - 4 * (int) TankGame.getImgSizeWall(),
-						middle_point_vert - (int) TankGame.getImgSizeWall() / 2, "weak"));
-				walls.add(new Wall((int) TankGame.getGameWidth() - 5 * (int) TankGame.getImgSizeWall(),
-						middle_point_vert - (int) TankGame.getImgSizeWall() / 2, "standard"));
-				walls.add(new Wall((int) TankGame.getGameWidth() - 6 * (int) TankGame.getImgSizeWall(),
-						middle_point_vert - (int) TankGame.getImgSizeWall() / 2, "standard"));
-				walls.add(new Wall((int) TankGame.getGameWidth() - 7 * (int) TankGame.getImgSizeWall(),
-						middle_point_vert - (int) TankGame.getImgSizeWall() / 2, "standard"));
-				walls.add(new Wall((int) TankGame.getGameWidth() - 8 * (int) TankGame.getImgSizeWall(),
-						middle_point_vert - (int) TankGame.getImgSizeWall() / 2, "standard"));
+				
 				break;
+			case 5:
+			walls.add(new Wall((int) TankGame.getGameWidth()-5*(int)TankGame.getImgSizeWall(),
+						(int) TankGame.getGameHeight()-3*(int)TankGame.getImgSizeWall(), "reward_3shot"));
+			walls.add(new Wall((int) TankGame.getGameWidth()-3*(int)TankGame.getImgSizeWall(),
+						(int) TankGame.getGameHeight()-5*(int)TankGame.getImgSizeWall(), "reward_shield"));
+			walls.add(new Wall((int) TankGame.getGameWidth()-6*(int)TankGame.getImgSizeWall(),
+						(int) TankGame.getGameHeight()-5*(int)TankGame.getImgSizeWall(), "weak"));
+			walls.add(new Wall((int) TankGame.getGameWidth()-5*(int)TankGame.getImgSizeWall(),
+						(int) TankGame.getGameHeight()-6*(int)TankGame.getImgSizeWall(), "weak"));
+			walls.add(new Wall((int) TankGame.getGameWidth()-4*(int)TankGame.getImgSizeWall(),
+						(int) TankGame.getGameHeight()-6*(int)TankGame.getImgSizeWall(), "weak"));
+			walls.add(new Wall((int) TankGame.getGameWidth()-3*(int)TankGame.getImgSizeWall(),
+						(int) TankGame.getGameHeight()-6*(int)TankGame.getImgSizeWall(), "weak"));
+			walls.add(new Wall((int) TankGame.getGameWidth()-2*(int)TankGame.getImgSizeWall(),
+						(int) TankGame.getGameHeight()-6*(int)TankGame.getImgSizeWall(), "weak"));
+			walls.add(new Wall((int) TankGame.getGameWidth()-6*(int)TankGame.getImgSizeWall(),
+						(int) TankGame.getGameHeight()-6*(int)TankGame.getImgSizeWall(), "weak"));
+			walls.add(new Wall((int) TankGame.getGameWidth()-6*(int)TankGame.getImgSizeWall(),
+						(int) TankGame.getGameHeight()-4*(int)TankGame.getImgSizeWall(), "weak"));
+			walls.add(new Wall((int) TankGame.getGameWidth()-6*(int)TankGame.getImgSizeWall(),
+						(int) TankGame.getGameHeight()-3*(int)TankGame.getImgSizeWall(), "weak"));
+			walls.add(new Wall((int) TankGame.getGameWidth()-6*(int)TankGame.getImgSizeWall(),
+						(int) TankGame.getGameHeight()-2*(int)TankGame.getImgSizeWall(), "weak"));
+			walls.add(new Wall(middle_point_horiz-(int)TankGame.getImgSizeWall(),
+						middle_point_vert-(int)TankGame.getImgSizeWall(), "standard"));
+			walls.add(new Wall(middle_point_horiz+(int)TankGame.getImgSizeWall(),
+						middle_point_vert+(int)TankGame.getImgSizeWall(), "standard"));
+			walls.add(new Wall(middle_point_horiz-(int)TankGame.getImgSizeWall(),
+						middle_point_vert+(int)TankGame.getImgSizeWall(), "standard"));
+			walls.add(new Wall(middle_point_horiz+(int)TankGame.getImgSizeWall(),
+						middle_point_vert-(int)TankGame.getImgSizeWall(), "standard"));
+			walls.add(new Wall(middle_point_horiz-3*(int)TankGame.getImgSizeWall(),
+						middle_point_vert-(int)TankGame.getImgSizeWall(), "standard"));
+			walls.add(new Wall(middle_point_horiz-5*(int)TankGame.getImgSizeWall(),
+						middle_point_vert+(int)TankGame.getImgSizeWall(), "standard"));
+			walls.add(new Wall(middle_point_horiz-3*(int)TankGame.getImgSizeWall(),
+						middle_point_vert+(int)TankGame.getImgSizeWall(), "standard"));
+			walls.add(new Wall(middle_point_horiz-5*(int)TankGame.getImgSizeWall(),
+						middle_point_vert-(int)TankGame.getImgSizeWall(), "standard"));
+			
+			
+			
+			break;
+
 			default:
 		}
 	}
