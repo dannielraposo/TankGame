@@ -157,7 +157,7 @@ public class TankGame extends JFrame {
         game.setVisible(false);
         game.setVisible(true);
 
-        if (currentGameLevel < 6) {
+        if (currentGameLevel < 7) {
             Timer screenTimer = new Timer();
             screenTimer.schedule(new TimerTask() {
                 @Override
