@@ -58,6 +58,7 @@ public class Tank {
 
 	public void incrlives() {
 		this.lives += 1;
+		System.out.println("Lives remaining:" + this.lives);
 	}
 
 	public void decrlives() {
@@ -67,7 +68,7 @@ public class Tank {
 				return;
 			} else {
 				this.lives -= 1;
-				TankGame.board.LostLife();
+				System.out.println("Lives remaining:" + this.lives);
 				return;
 			}
 		}

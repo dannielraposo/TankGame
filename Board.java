@@ -11,7 +11,7 @@ public class Board extends JPanel {
 	private boolean firstInit = true;
 	public Timer timer;
 	static private final int DELAY = 10;
-	private int currentGameLevel = 4;
+	private int currentGameLevel = 1;
 	private String backgroundImage;
 	static public TankMain MainTank;
 	static public List<Tank> EnemyTanks;
@@ -205,22 +205,6 @@ public class Board extends JPanel {
 		doDrawingBackground(g);
 		doDrawingTanks(g);
 		Toolkit.getDefaultToolkit().sync();
-	}
-
-	public void LostLife() {
-		if (MainTank.getLives() != 0) {
-			// JOptionPane.showMessageDialog(this, "Lifes Remaining: " +
-			// MainTank.getLives(), "Info", JOptionPane.YES_NO_OPTION);
-			// this.generateTanksandTerrain(currentGameLevel);
-			// super.paint(getGraphics());
-			// repaint();
-
-			// showImage();
-			// JOptionPane.showMessageDialog(this, "Game Over", "Game Over",
-			// JOptionPane.YES_NO_OPTION);
-			// System.exit(ABORT);
-		}
-
 	}
 
 	private void doDrawingBackground(Graphics g) {
