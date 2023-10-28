@@ -65,6 +65,7 @@ public class Tank {
 	public void decrlives() {
 		if (getTankType() == "TankMain") {
 			if (((TankMain) this).getShield()) {
+				Sound.LOSEREWARD.play();
 				((TankMain) this).setShield(false);
 				TankGame.footer.repaint();
 				return;

@@ -159,8 +159,11 @@ public class TankMain extends Tank {
                         timershield.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                Sound.LOSEREWARD.play();
-                                Board.MainTank.setShield(false);
+                                if (Board.MainTank.getShield()) {
+                                    Board.MainTank.setShield(false);
+                                } else {
+                                    Sound.LOSEREWARD.play();
+                                }
                                 TankGame.footer.repaint();
 
                             }
