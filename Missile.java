@@ -103,179 +103,184 @@ public class Missile {
     }
 
     public void move() {
+        if (this.getVisible()) {
 
-        double newPosx = this.getPosx() + MISSILE_SPEED * this.getDx();
-        double newPosy = this.getPosy() + MISSILE_SPEED * this.getDy();
+            double newPosx = this.getPosx() + MISSILE_SPEED * this.getDx();
+            double newPosy = this.getPosy() + MISSILE_SPEED * this.getDy();
 
-        if (this.doublespeed) {
-            newPosx = this.getPosx() + 2 * MISSILE_SPEED * this.getDx();
-            newPosy = this.getPosy() + 2 * MISSILE_SPEED * this.getDy();
-        }
-
-        double visualPosx = newPosx + TankGame.getImgSizeTank() / 2;
-        double visualPosy = newPosy + TankGame.getImgSizeTank() / 2;
-
-        // Check collision with MAIN tank
-        if ((visualPosx > Board.MainTank.getPosx() + TankGame.getImgSizeTank() * 60 / 512)
-                && (visualPosx < (Board.MainTank.getPosx() + TankGame.getImgSizeTank()
-                        - TankGame.getImgSizeTank() * 60 / 512))
-                && (visualPosy > Board.MainTank.getPosy() + TankGame.getImgSizeTank() * 60 / 512)
-                && (visualPosy < (Board.MainTank.getPosy() + TankGame.getImgSizeTank()
-                        - TankGame.getImgSizeTank() * 60 / 512))) {
-            this.setVisible(false);
-            if (this.getMissileType() == "enemy") {
-                Board.MainTank.decrlives();
+            if (this.doublespeed) {
+                newPosx = this.getPosx() + 2 * MISSILE_SPEED * this.getDx();
+                newPosy = this.getPosy() + 2 * MISSILE_SPEED * this.getDy();
             }
-            return;
 
-        }
+            double visualPosx = newPosx + TankGame.getImgSizeTank() / 2;
+            double visualPosy = newPosy + TankGame.getImgSizeTank() / 2;
 
-        // Check collision with enemy tanks
-        for (Tank tank : Board.EnemyTanks) {
-            if ((visualPosx > tank.getPosx() + TankGame.getImgSizeTank() * 60 / 512)
-                    && (visualPosx < (tank.getPosx() + TankGame.getImgSizeTank()
+            // Check collision with MAIN tank
+            if ((visualPosx > Board.MainTank.getPosx() + TankGame.getImgSizeTank() * 60 / 512)
+                    && (visualPosx < (Board.MainTank.getPosx() + TankGame.getImgSizeTank()
                             - TankGame.getImgSizeTank() * 60 / 512))
-                    && (visualPosy > tank.getPosy() + TankGame.getImgSizeTank() * 60 / 512)
-                    && (visualPosy < (tank.getPosy() + TankGame.getImgSizeTank()
+                    && (visualPosy > Board.MainTank.getPosy() + TankGame.getImgSizeTank() * 60 / 512)
+                    && (visualPosy < (Board.MainTank.getPosy() + TankGame.getImgSizeTank()
                             - TankGame.getImgSizeTank() * 60 / 512))) {
                 this.setVisible(false);
-                if (this.getMissileType() == "main") {
-                    tank.decrlives();
+                if (this.getMissileType() == "enemy") {
+                    Sound.MISSILEHIT.play();
+                    Board.MainTank.decrlives();
                 }
                 return;
 
             }
-        }
 
-        // Check collision with walls
-        for (Wall wall : Board.walls) {
-            if (visualPosx > wall.getPosx() && visualPosx < (wall.getPosx() + TankGame.getImgSizeWall())
-                    && visualPosy > wall.getPosy() && visualPosy < (wall.getPosy() + TankGame.getImgSizeWall())) {
-
-                if (wall.getType() == "standard") {
-                    if (this.bounced) {
-                        this.setVisible(false);
-                    } else {
-                        this.bounced = true;
-
-                        double distleft = Math.abs(visualPosx - wall.getPosx());
-                        double distright = Math.abs(visualPosx - (wall.getPosx() + TankGame.getImgSizeWall()));
-                        double disttop = Math.abs(visualPosy - wall.getPosy());
-                        double distbottom = Math.abs(visualPosy - (wall.getPosy() + TankGame.getImgSizeWall()));
-
-                        if (distleft < distright && distleft < disttop && distleft < distbottom) {
-                            // System.out.println("colision left wall");
-                            this.setDx(-this.getDx());
-                            this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
-                        } else if (distright < distleft && distright < disttop && distright < distbottom) {
-                            // System.out.println("colision right wall");
-                            this.setDx(-this.getDx());
-                            this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
-
-                        } else if (disttop < distright && disttop < distleft && disttop < distbottom) {
-                            // System.out.println("colision top wall");
-                            this.setDy(-this.getDy());
-                            this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
-
-                        } else if (distbottom < distright && distbottom < disttop && distbottom < distleft) {
-                            // System.out.println("colision bottom wall");
-                            this.setDy(-this.getDy());
-                            this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
-                        }
+            // Check collision with enemy tanks
+            for (Tank tank : Board.EnemyTanks) {
+                if ((visualPosx > tank.getPosx() + TankGame.getImgSizeTank() * 60 / 512)
+                        && (visualPosx < (tank.getPosx() + TankGame.getImgSizeTank()
+                                - TankGame.getImgSizeTank() * 60 / 512))
+                        && (visualPosy > tank.getPosy() + TankGame.getImgSizeTank() * 60 / 512)
+                        && (visualPosy < (tank.getPosy() + TankGame.getImgSizeTank()
+                                - TankGame.getImgSizeTank() * 60 / 512))) {
+                    this.setVisible(false);
+                    if (this.getMissileType() == "main") {
+                        Sound.MISSILEHIT.play();
+                        tank.decrlives();
                     }
-                } else if (wall.getType() == "weak") {
-                    if (this.getMissileType() == "enemy") {
-                        if (this.bounced) {
-                            this.setVisible(false);
-                        } else {
-                            this.bounced = true;
+                    return;
 
-                            double distleft = Math.abs(visualPosx - wall.getPosx());
-                            double distright = Math.abs(visualPosx - (wall.getPosx() + TankGame.getImgSizeWall()));
-                            double disttop = Math.abs(visualPosy - wall.getPosy());
-                            double distbottom = Math.abs(visualPosy - (wall.getPosy() + TankGame.getImgSizeWall()));
-
-                            if (distleft < distright && distleft < disttop && distleft < distbottom) {
-                                // System.out.println("colision left wall");
-                                this.setDx(-this.getDx());
-                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
-                            } else if (distright < distleft && distright < disttop && distright < distbottom) {
-                                // System.out.println("colision right wall");
-                                this.setDx(-this.getDx());
-                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
-
-                            } else if (disttop < distright && disttop < distleft && disttop < distbottom) {
-                                // System.out.println("colision top wall");
-                                this.setDy(-this.getDy());
-                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
-
-                            } else if (distbottom < distright && distbottom < disttop && distbottom < distleft) {
-                                // System.out.println("colision bottom wall");
-                                this.setDy(-this.getDy());
-                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
-                            }
-                        }
-                    } else {
-                        wall.setVisible(false);
-                        this.setVisible(false);
-                        this.setPosx(newPosx);
-                        this.setPosy(newPosy);
-                    }
-                } else if (wall.getType().startsWith("reward")) {
-                    if (this.getMissileType() == "enemy") {
-                        if (this.bounced) {
-                            this.setVisible(false);
-                        } else {
-                            this.bounced = true;
-
-                            double distleft = Math.abs(visualPosx - wall.getPosx());
-                            double distright = Math.abs(visualPosx - (wall.getPosx() + TankGame.getImgSizeWall()));
-                            double disttop = Math.abs(visualPosy - wall.getPosy());
-                            double distbottom = Math.abs(visualPosy - (wall.getPosy() + TankGame.getImgSizeWall()));
-
-                            if (distleft < distright && distleft < disttop && distleft < distbottom) {
-                                // System.out.println("colision left wall");
-                                this.setDx(-this.getDx());
-                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
-                            } else if (distright < distleft && distright < disttop && distright < distbottom) {
-                                // System.out.println("colision right wall");
-                                this.setDx(-this.getDx());
-                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
-
-                            } else if (disttop < distright && disttop < distleft && disttop < distbottom) {
-                                // System.out.println("colision top wall");
-                                this.setDy(-this.getDy());
-                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
-
-                            } else if (distbottom < distright && distbottom < disttop && distbottom < distleft) {
-                                // System.out.println("colision bottom wall");
-                                this.setDy(-this.getDy());
-                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
-                            }
-                        }
-                    } else {
-                        this.setVisible(false);
-                        wall.setVisible(false);
-
-                        Board.rewards.add(
-                                new Reward(
-                                        (int) (wall.getPosx() + TankGame.getImgSizeWall() / 2
-                                                - TankGame.getImgSizeReward() / 2),
-                                        (int) (wall.getPosy() + TankGame.getImgSizeWall() / 2
-                                                - TankGame.getImgSizeReward() / 2),
-                                        wall.getType()));
-
-                        this.setPosx(newPosx);
-                        this.setPosy(newPosy);
-                    }
                 }
             }
 
-            else {
-                this.setPosx(newPosx);
-                this.setPosy(newPosy);
-            }
+            // Check collision with walls
+            for (Wall wall : Board.walls) {
+                if (visualPosx > wall.getPosx() && visualPosx < (wall.getPosx() + TankGame.getImgSizeWall())
+                        && visualPosy > wall.getPosy() && visualPosy < (wall.getPosy() + TankGame.getImgSizeWall())) {
 
+                    if (wall.getType() == "standard") {
+                        if (this.bounced) {
+                            this.setVisible(false);
+                        } else {
+                            this.bounced = true;
+
+                            double distleft = Math.abs(visualPosx - wall.getPosx());
+                            double distright = Math.abs(visualPosx - (wall.getPosx() + TankGame.getImgSizeWall()));
+                            double disttop = Math.abs(visualPosy - wall.getPosy());
+                            double distbottom = Math.abs(visualPosy - (wall.getPosy() + TankGame.getImgSizeWall()));
+
+                            if (distleft < distright && distleft < disttop && distleft < distbottom) {
+                                // System.out.println("colision left wall");
+                                this.setDx(-this.getDx());
+                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+                            } else if (distright < distleft && distright < disttop && distright < distbottom) {
+                                // System.out.println("colision right wall");
+                                this.setDx(-this.getDx());
+                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+
+                            } else if (disttop < distright && disttop < distleft && disttop < distbottom) {
+                                // System.out.println("colision top wall");
+                                this.setDy(-this.getDy());
+                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+
+                            } else if (distbottom < distright && distbottom < disttop && distbottom < distleft) {
+                                // System.out.println("colision bottom wall");
+                                this.setDy(-this.getDy());
+                                this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+                            }
+                        }
+                    } else if (wall.getType() == "weak") {
+                        if (this.getMissileType() == "enemy") {
+                            if (this.bounced) {
+                                this.setVisible(false);
+                            } else {
+                                this.bounced = true;
+
+                                double distleft = Math.abs(visualPosx - wall.getPosx());
+                                double distright = Math.abs(visualPosx - (wall.getPosx() + TankGame.getImgSizeWall()));
+                                double disttop = Math.abs(visualPosy - wall.getPosy());
+                                double distbottom = Math.abs(visualPosy - (wall.getPosy() + TankGame.getImgSizeWall()));
+
+                                if (distleft < distright && distleft < disttop && distleft < distbottom) {
+                                    // System.out.println("colision left wall");
+                                    this.setDx(-this.getDx());
+                                    this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+                                } else if (distright < distleft && distright < disttop && distright < distbottom) {
+                                    // System.out.println("colision right wall");
+                                    this.setDx(-this.getDx());
+                                    this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+
+                                } else if (disttop < distright && disttop < distleft && disttop < distbottom) {
+                                    // System.out.println("colision top wall");
+                                    this.setDy(-this.getDy());
+                                    this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+
+                                } else if (distbottom < distright && distbottom < disttop && distbottom < distleft) {
+                                    // System.out.println("colision bottom wall");
+                                    this.setDy(-this.getDy());
+                                    this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+                                }
+                            }
+                        } else {
+                            wall.setVisible(false);
+                            this.setVisible(false);
+                            this.setPosx(newPosx);
+                            this.setPosy(newPosy);
+                        }
+                    } else if (wall.getType().startsWith("reward")) {
+                        if (this.getMissileType() == "enemy") {
+                            if (this.bounced) {
+                                this.setVisible(false);
+                            } else {
+                                this.bounced = true;
+
+                                double distleft = Math.abs(visualPosx - wall.getPosx());
+                                double distright = Math.abs(visualPosx - (wall.getPosx() + TankGame.getImgSizeWall()));
+                                double disttop = Math.abs(visualPosy - wall.getPosy());
+                                double distbottom = Math.abs(visualPosy - (wall.getPosy() + TankGame.getImgSizeWall()));
+
+                                if (distleft < distright && distleft < disttop && distleft < distbottom) {
+                                    // System.out.println("colision left wall");
+                                    this.setDx(-this.getDx());
+                                    this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+                                } else if (distright < distleft && distright < disttop && distright < distbottom) {
+                                    // System.out.println("colision right wall");
+                                    this.setDx(-this.getDx());
+                                    this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+
+                                } else if (disttop < distright && disttop < distleft && disttop < distbottom) {
+                                    // System.out.println("colision top wall");
+                                    this.setDy(-this.getDy());
+                                    this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+
+                                } else if (distbottom < distright && distbottom < disttop && distbottom < distleft) {
+                                    // System.out.println("colision bottom wall");
+                                    this.setDy(-this.getDy());
+                                    this.setAngle((double) Math.toDegrees(Math.atan2(this.getDy(), this.getDx())));
+                                }
+                            }
+                        } else {
+                            Sound.WALLDESTROY.play();
+                            this.setVisible(false);
+                            wall.setVisible(false);
+
+                            Board.rewards.add(
+                                    new Reward(
+                                            (int) (wall.getPosx() + TankGame.getImgSizeWall() / 2
+                                                    - TankGame.getImgSizeReward() / 2),
+                                            (int) (wall.getPosy() + TankGame.getImgSizeWall() / 2
+                                                    - TankGame.getImgSizeReward() / 2),
+                                            wall.getType()));
+
+                            this.setPosx(newPosx);
+                            this.setPosy(newPosy);
+                        }
+                    }
+                }
+
+                else {
+                    this.setPosx(newPosx);
+                    this.setPosy(newPosy);
+                }
+
+            }
         }
     }
 }

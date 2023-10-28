@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -33,11 +32,11 @@ public class Footer extends JPanel {
         g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         // // Draw background image:
-        // ImageIcon imageBackground = new ImageIcon("Resources/background3.png");
-        // Image sciimageBackground = imageBackground.getImage();
-        // Graphics2D gpScreenimage = (Graphics2D) g.create();
-        // gpScreenimage.drawImage(sciimageBackground, 0, 0, this);
-        // gpScreenimage.dispose();
+        ImageIcon imageBackground = new ImageIcon("Resources/footer_background.png");
+        Image sciimageBackground = imageBackground.getImage();
+        Graphics2D gpScreenimage = (Graphics2D) g.create();
+        gpScreenimage.drawImage(sciimageBackground, 0, 0, this);
+        gpScreenimage.dispose();
 
         // Draw rewards:
 

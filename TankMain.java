@@ -44,7 +44,7 @@ public class TankMain extends Tank {
         return this.triple_shot;
     }
 
-        public boolean getDouble_speed() {
+    public boolean getDouble_speed() {
         return this.double_speed;
     }
 
@@ -95,10 +95,10 @@ public class TankMain extends Tank {
                             .getPosy()))
                     && reward.getVisible()) {
 
+                Sound.PICKREWARD.play();
                 reward.setVisible(false);
                 switch (reward.getType()) {
                     case "reward_1up":
-                        System.out.println("suma 1 vida");
                         this.incrlives();
                         break;
 
@@ -108,9 +108,9 @@ public class TankMain extends Tank {
                         timer3shot.schedule(new TimerTask() {
                             @Override
                             public void run() {
+                                Sound.LOSEREWARD.play();
                                 Board.MainTank.triple_shot = false;
                                 TankGame.footer.repaint();
-
                             }
                         }, 5 * 1000);
                         TankGame.footer.repaint();
@@ -123,6 +123,8 @@ public class TankMain extends Tank {
                         timer2speed.schedule(new TimerTask() {
                             @Override
                             public void run() {
+                                Sound.LOSEREWARD.play();
+
                                 Board.MainTank.double_speed = false;
                                 TankGame.footer.repaint();
 
@@ -138,14 +140,12 @@ public class TankMain extends Tank {
                         timerghost.schedule(new TimerTask() {
                             @Override
                             public void run() {
-
+                                Sound.LOSEREWARD.play();
                                 Board.MainTank.setGhost(false);
                                 TankGame.footer.repaint();
-
                                 if (Board.MainTank.collides(Board.MainTank.getPosx(), Board.MainTank.getPosy())) {
+                                    Sound.MISSILEHIT.play();
                                     Board.MainTank.decrlives();
-
-                                    System.out.println("stucked after ghost mode");
                                 }
                             }
                         }, 5 * 1000);
@@ -159,6 +159,7 @@ public class TankMain extends Tank {
                         timershield.schedule(new TimerTask() {
                             @Override
                             public void run() {
+                                Sound.LOSEREWARD.play();
                                 Board.MainTank.setShield(false);
                                 TankGame.footer.repaint();
 

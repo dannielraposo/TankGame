@@ -58,7 +58,7 @@ public class Tank {
 
 	public void incrlives() {
 		this.lives += 1;
-		System.out.println("Lives remaining:" + this.lives);
+		// System.out.println("Lives remaining:" + this.lives);
 		TankGame.footer.repaint();
 	}
 
@@ -71,7 +71,7 @@ public class Tank {
 			} else {
 				this.lives -= 1;
 				TankGame.footer.repaint();
-				System.out.println("Lives remaining:" + this.lives);
+				// System.out.println("Lives remaining:" + this.lives);
 				return;
 			}
 		}

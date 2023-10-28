@@ -64,7 +64,7 @@ public class TankGame extends JFrame {
 
     private void initUI() {
 
-        Sound.BACK.loop();
+        Sound.MENU.loop();
 
         while ((getGameWidth() / (16f / 9f)) - (int) (getGameWidth() / (16f / 9f)) != 0) {
             TankGame.width--;
@@ -79,7 +79,7 @@ public class TankGame extends JFrame {
         // Set up the JFrame
         this.setTitle("Tanketo++");
         // this.setSize(getGameWidth(), getGameHeight());
-        this.setPreferredSize(new Dimension(getGameWidth(), (int) (getGameHeight()*1.15)));
+        this.setPreferredSize(new Dimension(getGameWidth(), (int) (getGameHeight() * 1.15)));
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // Creating start panel:
@@ -128,6 +128,9 @@ public class TankGame extends JFrame {
                 game.add(footer);
                 game.setVisible(false);
                 game.setVisible(true);
+                Sound.MENU.stop();
+                Sound.BACKGROUND.loop();
+
             }
         });
 
@@ -142,6 +145,7 @@ public class TankGame extends JFrame {
     }
 
     public static void changeLevel(int currentGameLevel) {
+        Sound.BACKGROUND.stop();
         board.timer.cancel();
         game.remove(board);
         game.remove(footer);
@@ -153,25 +157,32 @@ public class TankGame extends JFrame {
         game.setVisible(false);
         game.setVisible(true);
 
-        Timer screenTimer = new Timer();
-        screenTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                game.remove(panel);
-                board.initBoard();
-                footer = new Footer();
-                game.add(board);
-                game.add(footer);
-                game.pack();
-                game.setVisible(false);
-                game.setVisible(true);
-                screenTimer.cancel();
-            }
-        }, 4 * 1000);
+        if (currentGameLevel < 6) {
+            Timer screenTimer = new Timer();
+            screenTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    game.remove(panel);
+                    board.initBoard();
+                    footer = new Footer();
+                    game.add(board);
+                    game.add(footer);
+                    game.pack();
+                    game.setVisible(false);
+                    game.setVisible(true);
+                    screenTimer.cancel();
+                    Sound.BACKGROUND.loop();
+                }
+            }, 4 * 1000);
+        }
 
+        else {
+            Sound.WIN.play();
+        }
     }
 
     public static void restartGame() {
+        Sound.BACKGROUND.stop();
         game.remove(board);
         board.timer.cancel();
         game.remove(footer);
@@ -182,24 +193,17 @@ public class TankGame extends JFrame {
 
         game.setVisible(false);
         game.setVisible(true);
+        Sound.GAMEOVER.play();
 
         Timer timerRestart = new Timer();
         timerRestart.schedule(new TimerTask() {
             @Override
             public void run() {
-                game.remove(panel);
-                board = new Board();
-                game.add(board);
-                footer = new Footer();
-                game.add(footer);
-                game.pack();
-                game.setVisible(false);
+                game = new TankGame();
                 game.setVisible(true);
                 timerRestart.cancel();
-
             }
         }, 4 * 1000);
-
     }
 
     public static void main(String[] args) {

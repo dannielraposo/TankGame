@@ -26,7 +26,7 @@ public class TankBasic extends Tank {
     }
 
     public void update(Tank mainTank) {
-        if (this.getLives() == 0) {
+        if (this.getLives() < 1) {
             this.setVisible(false);
             return;
         }
