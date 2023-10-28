@@ -76,15 +76,15 @@ public class Board extends JPanel {
 			MainTank = new TankMain((int) TankGame.getImgSizeWall(), (int) TankGame.getImgSizeWall(), 0);
 
 			EnemyTanks.add(new TankHard((int) TankGame.getImgSizeWall(),
-			3 * (int) TankGame.getImgSizeWall(), 0));
+					3 * (int) TankGame.getImgSizeWall(), 0));
 			EnemyTanks.add(new TankHard(9 * (int) TankGame.getImgSizeWall(),
-			3 * (int) TankGame.getImgSizeWall(), 90));
+					3 * (int) TankGame.getImgSizeWall(), 90));
 			EnemyTanks.add(new TankHard(7 * (int) TankGame.getImgSizeWall(),
-			9 * (int) TankGame.getImgSizeWall(), 270));
+					9 * (int) TankGame.getImgSizeWall(), 270));
 			EnemyTanks.add(new TankHard(10 * (int) TankGame.getImgSizeWall(),
-			(int) TankGame.getImgSizeWall(), 0));
+					(int) TankGame.getImgSizeWall(), 0));
 			EnemyTanks.add(new TankHard(15 * (int) TankGame.getImgSizeWall(),
-			6 * (int) TankGame.getImgSizeWall(), 180));
+					6 * (int) TankGame.getImgSizeWall(), 180));
 
 			generateTerrain(GameLevel);
 		}
@@ -133,7 +133,7 @@ public class Board extends JPanel {
 			public void run() {
 				heartbeat();
 			}
-		}, 3*1000, DELAY);
+		}, 3 * 1000, DELAY);
 	}
 
 	// action performed every DELAY
@@ -161,32 +161,36 @@ public class Board extends JPanel {
 			TankGame.restartGame();
 		}
 
-		Point mousePoint = MouseInfo.getPointerInfo().getLocation();
-		SwingUtilities.convertPointFromScreen(mousePoint, this);
-		MainTank.update(mousePoint);
+		try {
+			Point mousePoint = MouseInfo.getPointerInfo().getLocation();
+			SwingUtilities.convertPointFromScreen(mousePoint, this);
+			MainTank.update(mousePoint);
 
-		for (Missile missile : missiles) {
-			missile.move();
-		}
-
-		for (Tank tank : EnemyTanks) {
-			switch (tank.getTankType()) {
-				case "TankBasic":
-					((TankBasic) tank).update(MainTank);
-					break;
-				case "TankMoves":
-					((TankMoves) tank).update(MainTank);
-					break;
-				case "TankHard":
-					((TankHard) tank).update(MainTank);
-					break;
-				case "TankTriple":
-					((TankTriple) tank).update(MainTank);
-					break;
+			for (Missile missile : missiles) {
+				missile.move();
 			}
-		}
 
-		repaint(); // calls paintComponent() everytime
+			for (Tank tank : EnemyTanks) {
+				switch (tank.getTankType()) {
+					case "TankBasic":
+						((TankBasic) tank).update(MainTank);
+						break;
+					case "TankMoves":
+						((TankMoves) tank).update(MainTank);
+						break;
+					case "TankHard":
+						((TankHard) tank).update(MainTank);
+						break;
+					case "TankTriple":
+						((TankTriple) tank).update(MainTank);
+						break;
+				}
+			}
+		} catch (Exception e) {
+		} finally {
+			repaint(); // calls paintComponent() everytime
+
+		}
 
 	}
 
@@ -225,10 +229,11 @@ public class Board extends JPanel {
 		Graphics2D gphbackimage = (Graphics2D) g.create();
 		ImageIcon imageBackground = new ImageIcon(backgroundImage);
 		Image sciimageBackground = imageBackground.getImage();
-		// sciimageBackground = sciimageBackground.getScaledInstance((int) TankGame.getGameWidth(),
+		// sciimageBackground = sciimageBackground.getScaledInstance((int)
+		// TankGame.getGameWidth(),
 		// TankGame.getGameHeight(),
 		// java.awt.Image.SCALE_AREA_AVERAGING);
-		gphbackimage.drawImage(sciimageBackground, 0, 0,TankGame.getGameWidth(),TankGame.getGameHeight(), this);
+		gphbackimage.drawImage(sciimageBackground, 0, 0, TankGame.getGameWidth(), TankGame.getGameHeight(), this);
 		gphbackimage.dispose();
 
 		// Draw walls:
