@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.Dimension;
+
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,14 +17,15 @@ public class TankGame extends JFrame {
 
     public static Board board;
     public static TankGame game;
+    public static Footer footer;
 
     /*
      * Let's get screen size using the Toolkit class and make it so that
      * the window is 0.9 the resolution of the screen.
      */
-    private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    private static int height = (int) (screenSize.getHeight() * 0.9);
-    private static int width = (int) (screenSize.getWidth() * 0.9);
+    public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static int height = (int) (screenSize.getHeight() * 0.75);
+    private static int width = (int) (screenSize.getWidth() * 0.75);
     // private static int width = height;
 
     /*
@@ -79,10 +82,9 @@ public class TankGame extends JFrame {
         // Set up the JFrame
         this.setTitle("Tanketo++");
         // this.setSize(getGameWidth(), getGameHeight());
-        // this.setPreferredSize(new Dimension(getGameWidth(), getGameHeight()));
+        this.setPreferredSize(new Dimension(getGameWidth(), (int) (getGameHeight() + screenSize.getHeight() * 0.15)));
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         // Creating start panel:
         JPanel startPanel = new Screen("Resources/initScreen.png");
         // JButton startButton = new JButton("START");
@@ -124,7 +126,9 @@ public class TankGame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 game.remove(startPanel);
                 board = new Board();
+                footer = new Footer();
                 game.add(board);
+                game.add(footer);
                 game.setVisible(false);
                 game.setVisible(true);
             }
@@ -143,6 +147,7 @@ public class TankGame extends JFrame {
     public static void changeLevel(int currentGameLevel) {
         board.timer.cancel();
         game.remove(board);
+        game.remove(footer);
 
         Screen panel = new Screen("Resources/nextlevel" + currentGameLevel + ".png");
         game.add(panel);
@@ -157,7 +162,9 @@ public class TankGame extends JFrame {
             public void run() {
                 game.remove(panel);
                 board.initBoard();
+                footer.initFooter();
                 game.add(board);
+                game.add(footer);
                 game.pack();
                 game.setVisible(false);
                 game.setVisible(true);
@@ -170,6 +177,7 @@ public class TankGame extends JFrame {
     public static void restartGame() {
         game.remove(board);
         board.timer.cancel();
+        game.remove(footer);
 
         Screen panel = new Screen("Resources/gameover.png");
         game.add(panel);
@@ -184,6 +192,8 @@ public class TankGame extends JFrame {
             public void run() {
                 game.remove(panel);
                 board = new Board();
+                footer = new Footer();
+                game.add(footer);
                 game.add(board);
                 game.pack();
                 game.setVisible(false);
