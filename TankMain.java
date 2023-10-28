@@ -84,11 +84,12 @@ public class TankMain extends Tank {
                     || ((newPosy + TankGame.getImgSizeTank() * 60 / 512) > (reward.getPosy()
                             + TankGame.getImgSizeReward()))
                     || ((newPosy + TankGame.getImgSizeTank() - TankGame.getImgSizeTank() * 60 / 512) < reward
-                            .getPosy()))) {
+                            .getPosy())) && reward.getVisible()) {
 
                 reward.setVisible(false);
                 switch (reward.getType()) {
                     case "reward_1up":
+                        System.out.println("suma 1 vida");
                         this.incrlives();
                         break;
 

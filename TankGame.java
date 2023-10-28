@@ -63,6 +63,9 @@ public class TankGame extends JFrame {
 
     private void initUI() {
 
+        Sound.BACK.loop();
+
+
         while ((getGameWidth() / (16f / 9f)) - (int) (getGameWidth() / (16f / 9f)) != 0) {
             TankGame.width--;
         }

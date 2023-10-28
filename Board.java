@@ -11,7 +11,7 @@ public class Board extends JPanel {
 	private boolean firstInit = true;
 	public Timer timer;
 	static private final int DELAY = 10;
-	private int currentGameLevel = 1;
+	private int currentGameLevel = 4;
 	private String backgroundImage;
 	static public TankMain MainTank;
 	static public List<Tank> EnemyTanks;
