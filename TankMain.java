@@ -90,6 +90,7 @@ public class TankMain extends Tank {
                 switch (reward.getType()) {
                     case "reward_1up":
                         this.incrlives();
+                        break;
 
                     case "reward_3shot":
                         this.triple_shot = true;

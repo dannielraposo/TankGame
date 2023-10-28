@@ -1,12 +1,12 @@
 import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.awt.Color;
 import java.awt.Dimension;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,7 +24,6 @@ public class TankGame extends JFrame {
     private static int height = (int) (screenSize.getHeight() * 0.9);
     private static int width = (int) (screenSize.getWidth() * 0.9);
     // private static int width = height;
-
 
     /*
      * The size of walls is adjusted in order to fit well
@@ -64,16 +63,16 @@ public class TankGame extends JFrame {
 
     private void initUI() {
 
-        while((getGameWidth() / (16f/9f) ) - (int) (getGameWidth() / (16f/9f) ) != 0){
+        while ((getGameWidth() / (16f / 9f)) - (int) (getGameWidth() / (16f / 9f)) != 0) {
             TankGame.width--;
         }
 
-        TankGame.height = (int) (getGameWidth() / (16f/9f) );
-        
-        imgSizeTank = (height /13); // Size (lenght and width of icons in game: tanks)
-        imgSizeReward = (height /15); // Size (lenght and width of icons in game: reward)
-        imgSizeWall = (height /11); // Size (lenght and width of icons in game: walls)
-        
+        TankGame.height = (int) (getGameWidth() / (16f / 9f));
+
+        imgSizeTank = (height / 13); // Size (lenght and width of icons in game: tanks)
+        imgSizeReward = (height / 15); // Size (lenght and width of icons in game: reward)
+        imgSizeWall = (height / 11); // Size (lenght and width of icons in game: walls)
+
         // Set up the JFrame
         this.setTitle("Tanketo++");
         // this.setSize(getGameWidth(), getGameHeight());
@@ -82,12 +81,40 @@ public class TankGame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Creating start panel:
-        JPanel startPanel = new JPanel();
-        JButton startButton = new JButton("START");
+        JPanel startPanel = new Screen("Resources/initScreen.png");
+        // JButton startButton = new JButton("START");
         startPanel.setSize(TankGame.getGameWidth(), TankGame.getGameHeight());
         startPanel.setPreferredSize(new Dimension(TankGame.getGameWidth(), TankGame.getGameHeight()));
-        startPanel.add(startButton);
-        startPanel.setBackground(Color.red);
+        // startPanel.add(startButton);
+        // startPanel.setBackground(Color.red);
+
+        startPanel.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.anchor = GridBagConstraints.NORTH;
+
+        // startPanel.add(new JLabel("<html><h1><strong><i>TANK
+        // GAME</i></strong></h1><hr></html>"), gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        JPanel buttons = new JPanel(new GridBagLayout());
+        JButton startButton = new JButton("Start Game");
+        JButton exitButton = new JButton("Exit");
+        startButton.setPreferredSize(
+                new Dimension((int) (TankGame.getGameWidth() * 0.6), (int) (TankGame.getGameHeight() * 0.1)));
+        startButton.setFont(startButton.getFont().deriveFont(25f));
+
+        exitButton.setPreferredSize(
+                new Dimension((int) (TankGame.getGameWidth() * 0.6), (int) (TankGame.getGameHeight() * 0.1)));
+        exitButton.setFont(startButton.getFont().deriveFont(25f));
+
+        buttons.add(startButton, gbc);
+        buttons.add(exitButton, gbc);
+        startPanel.add(buttons);
+
         this.add(startPanel);
 
         startButton.addActionListener(new ActionListener() {
@@ -97,6 +124,12 @@ public class TankGame extends JFrame {
                 game.add(board);
                 game.setVisible(false);
                 game.setVisible(true);
+            }
+        });
+
+        exitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
 
