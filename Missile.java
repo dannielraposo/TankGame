@@ -254,8 +254,8 @@ public class Missile {
                             }
                         }
                     } else {
-                        wall.setVisible(false);
                         this.setVisible(false);
+                        wall.setVisible(false);
 
                         Board.rewards.add(
                                 new Reward(
