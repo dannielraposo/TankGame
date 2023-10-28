@@ -14,7 +14,8 @@ public class Screen extends JPanel {
         setBackground(Color.white);
         setFocusable(true);
         setSize(TankGame.getGameWidth(), TankGame.getGameHeight());
-        setPreferredSize(new Dimension(TankGame.getGameWidth(), TankGame.getGameHeight()));
+        setPreferredSize(new Dimension(TankGame.getGameWidth(),
+                (int) (TankGame.getGameHeight() + TankGame.screenSize.getHeight() * 0.15)));
         image = ImagePath;
     }
 
@@ -25,7 +26,7 @@ public class Screen extends JPanel {
         ImageIcon imageBackground = new ImageIcon(image); // load the image to a imageIcon
         Image sciimageBackground = imageBackground.getImage(); // transform it
         Graphics2D gpScreenimage = (Graphics2D) g.create();
-        gpScreenimage.drawImage(sciimageBackground, 0, 0, TankGame.getGameWidth(), TankGame.getGameHeight(), this);
+        gpScreenimage.drawImage(sciimageBackground, 0, 0, TankGame.getGameWidth(), (int) (TankGame.getGameHeight() + TankGame.screenSize.getHeight() * 0.15), this);
         gpScreenimage.dispose();
     }
 }

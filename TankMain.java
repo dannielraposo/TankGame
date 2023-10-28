@@ -40,6 +40,14 @@ public class TankMain extends Tank {
         return this.ghost;
     }
 
+    public boolean getTriple_Shot() {
+        return this.triple_shot;
+    }
+
+        public boolean getDouble_speed() {
+        return this.double_speed;
+    }
+
     public TankMain(int initialx, int initialy, double initialAngle) {
         super(initialx, initialy, initialAngle, "TankMain", 3);
         loadImage("Resources/base_green.png", "Resources/cannon_green.png");
@@ -84,7 +92,8 @@ public class TankMain extends Tank {
                     || ((newPosy + TankGame.getImgSizeTank() * 60 / 512) > (reward.getPosy()
                             + TankGame.getImgSizeReward()))
                     || ((newPosy + TankGame.getImgSizeTank() - TankGame.getImgSizeTank() * 60 / 512) < reward
-                            .getPosy())) && reward.getVisible()) {
+                            .getPosy()))
+                    && reward.getVisible()) {
 
                 reward.setVisible(false);
                 switch (reward.getType()) {
@@ -100,41 +109,59 @@ public class TankMain extends Tank {
                             @Override
                             public void run() {
                                 Board.MainTank.triple_shot = false;
+                                TankGame.footer.repaint();
+
                             }
                         }, 5 * 1000);
+                        TankGame.footer.repaint();
                         break;
 
                     case "reward_energy":
                         this.double_speed = true;
+                        TankGame.footer.repaint();
                         Timer timer2speed = new Timer();
                         timer2speed.schedule(new TimerTask() {
                             @Override
                             public void run() {
                                 Board.MainTank.double_speed = false;
+                                TankGame.footer.repaint();
+
                             }
                         }, 5 * 1000);
                         break;
                     case "reward_ghost":
                         setGhost(true);
+
+                        TankGame.footer.repaint();
+
                         Timer timerghost = new Timer();
                         timerghost.schedule(new TimerTask() {
                             @Override
                             public void run() {
+
                                 Board.MainTank.setGhost(false);
+                                TankGame.footer.repaint();
+
                                 if (Board.MainTank.collides(Board.MainTank.getPosx(), Board.MainTank.getPosy())) {
                                     Board.MainTank.decrlives();
+
                                     System.out.println("stucked after ghost mode");
                                 }
                             }
                         }, 5 * 1000);
+
                         break;
                     case "reward_shield":
                         setShield(true);
+                        TankGame.footer.repaint();
+
                         Timer timershield = new Timer();
                         timershield.schedule(new TimerTask() {
                             @Override
                             public void run() {
                                 Board.MainTank.setShield(false);
+                                TankGame.footer.repaint();
+
                             }
                         }, 15 * 1000);
                         break;
@@ -142,7 +169,6 @@ public class TankMain extends Tank {
                 }
             }
         }
-
     }
 
     public void fire() {

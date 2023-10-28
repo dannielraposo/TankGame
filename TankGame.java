@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.Dimension;
-
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -68,7 +66,6 @@ public class TankGame extends JFrame {
 
         Sound.BACK.loop();
 
-
         while ((getGameWidth() / (16f / 9f)) - (int) (getGameWidth() / (16f / 9f)) != 0) {
             TankGame.width--;
         }
@@ -82,7 +79,7 @@ public class TankGame extends JFrame {
         // Set up the JFrame
         this.setTitle("Tanketo++");
         // this.setSize(getGameWidth(), getGameHeight());
-        this.setPreferredSize(new Dimension(getGameWidth(), (int) (getGameHeight() + screenSize.getHeight() * 0.15)));
+        this.setPreferredSize(new Dimension(getGameWidth(), (int) (getGameHeight()*1.15)));
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // Creating start panel:
@@ -162,7 +159,7 @@ public class TankGame extends JFrame {
             public void run() {
                 game.remove(panel);
                 board.initBoard();
-                footer.initFooter();
+                footer = new Footer();
                 game.add(board);
                 game.add(footer);
                 game.pack();
@@ -192,9 +189,9 @@ public class TankGame extends JFrame {
             public void run() {
                 game.remove(panel);
                 board = new Board();
+                game.add(board);
                 footer = new Footer();
                 game.add(footer);
-                game.add(board);
                 game.pack();
                 game.setVisible(false);
                 game.setVisible(true);

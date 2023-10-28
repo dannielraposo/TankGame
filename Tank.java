@@ -59,15 +59,18 @@ public class Tank {
 	public void incrlives() {
 		this.lives += 1;
 		System.out.println("Lives remaining:" + this.lives);
+		TankGame.footer.repaint();
 	}
 
 	public void decrlives() {
 		if (getTankType() == "TankMain") {
 			if (((TankMain) this).getShield()) {
 				((TankMain) this).setShield(false);
+				TankGame.footer.repaint();
 				return;
 			} else {
 				this.lives -= 1;
+				TankGame.footer.repaint();
 				System.out.println("Lives remaining:" + this.lives);
 				return;
 			}
