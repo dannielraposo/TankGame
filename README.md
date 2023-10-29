@@ -18,4 +18,10 @@ Instructions:
    ![image](https://github.com/dannielraposo/TankGame/assets/148542289/f96406aa-f92d-48f5-8402-65faf152fab4)
    ![image](https://github.com/dannielraposo/TankGame/assets/148542289/2292308c-0eda-454d-b7c3-c5cfb412bde7)
 
+# Objective and information about the game:
+The objective of the game is to pass all 6 levels without letting the enemy tanks hit you 3 times.
+Throughout these levels you will encounter different types of enemies, blocks and power-ups.
+
+## Tank Types
+
 
