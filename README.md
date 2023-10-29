@@ -30,3 +30,11 @@ Throughout these levels you will encounter different types of enemies, blocks an
 - **Hard Tank**: this tank will be able to take more shots than the basic and move tank.
 - **Triple Tank**: this tank is the most dangerous one. It can take more hits than any other enemy. It also has increased speed and triple shot in a cone in front of him.
 
+## Wall Types
+![walls](https://github.com/dannielraposo/TankGame/assets/54643225/f14911b9-242c-4d78-9a12-f6473ce7d3a5)
+- **Standard Wall**: they are indestructible, they build the limits for the arena where you will be playing.
+- **Weak Wall**: they can be destroyed by shooting them. Although only you will be able to destroy them (not the enemies).
+- **Reward Wall**: they can be destroyed by shooting them and will drop a reward. This reward is fixed for each block and map (they are not random).
+
+## Reward Types
+![rewards](https://github.com/dannielraposo/TankGame/assets/54643225/0bfeb3fc-66e1-4ab7-a7a0-47963559237d)
