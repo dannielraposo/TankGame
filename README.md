@@ -14,9 +14,9 @@ Instructions:
 3. Compile all java classes with "javac -d . *.java"
 4. Launch game with "java TankGame"
 
-   ![image](https://github.com/dannielraposo/TankGame/assets/148542289/73f4349e-df9c-4227-8f36-29d050931ad3)
-   ![image](https://github.com/dannielraposo/TankGame/assets/148542289/f96406aa-f92d-48f5-8402-65faf152fab4)
-   ![image](https://github.com/dannielraposo/TankGame/assets/148542289/2292308c-0eda-454d-b7c3-c5cfb412bde7)
+![image](https://github.com/dannielraposo/TankGame/assets/148542289/35e02cc3-88f8-4db3-9d4e-ab0c9590d2cf)
+![image](https://github.com/dannielraposo/TankGame/assets/148542289/b60cf90e-7fbd-48ad-8871-065e8eb85302)
+![image](https://github.com/dannielraposo/TankGame/assets/148542289/cc1ddca3-a714-4e07-ae52-8f56dab10f5f)
 
 # Objective and information about the game:
 The objective of the game is to pass all 6 levels without being hit 3 times.
