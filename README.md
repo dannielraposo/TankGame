@@ -31,10 +31,15 @@ Throughout these levels you will encounter different types of enemies, blocks an
 - **Triple Tank**: this tank is the most dangerous one. It can take more hits than any other enemy. It also has increased speed and triple shot in a cone in front of him.
 
 ## Wall Types
-![walls](https://github.com/dannielraposo/TankGame/assets/54643225/f14911b9-242c-4d78-9a12-f6473ce7d3a5)
+![walls](https://github.com/dannielraposo/TankGame/assets/54643225/05ee22f2-a1e3-4308-9dee-f48958d95dd8)
 - **Standard Wall**: they are indestructible, they build the limits for the arena where you will be playing.
 - **Weak Wall**: they can be destroyed by shooting them. Although only you will be able to destroy them (not the enemies).
 - **Reward Wall**: they can be destroyed by shooting them and will drop a reward. This reward is fixed for each block and map (they are not random).
 
 ## Reward Types
 ![rewards](https://github.com/dannielraposo/TankGame/assets/54643225/0bfeb3fc-66e1-4ab7-a7a0-47963559237d)
+- **Energy**: this will boost your movement and shooting speed by some time.
+- **Shield**: this shield will let you take one hit without losing a heart, but it stays on for a limited time.
+- **1 UP**: this reward will allow you to recover one of your hearts.
+- **Ghost**: for a limited amount of time, you will be able to go through walls and the enemies won't be able to see you.
+- **3-Shot**: for some time, this will allow you to have a triple shot in a cone area just in front of you.
