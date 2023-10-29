@@ -14,6 +14,8 @@ Instructions:
 3. Compile all java classes with "javac -d . *.java"
 4. Launch game with "java TankGame"
 
+Do not forget to turn up the volume!!
+
 ![image](https://github.com/dannielraposo/TankGame/assets/148542289/35e02cc3-88f8-4db3-9d4e-ab0c9590d2cf)
 ![image](https://github.com/dannielraposo/TankGame/assets/148542289/b60cf90e-7fbd-48ad-8871-065e8eb85302)
 ![image](https://github.com/dannielraposo/TankGame/assets/148542289/cc1ddca3-a714-4e07-ae52-8f56dab10f5f)
